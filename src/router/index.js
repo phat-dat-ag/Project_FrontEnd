@@ -5,6 +5,7 @@ import Book from "@/views/Book.vue";
 import Publisher from "@/views/Publisher.vue";
 import Staff from "@/views/Staff.vue";
 import Track from "@/views/Track.vue";
+import NotFound from "@/views/NotFound.vue";
 
 const routes = [
     {
@@ -36,6 +37,12 @@ const routes = [
         path: "/track",
         name: "track",
         component: Track,
+    },
+    // Đón các đường dẫn không tồn tại để thông báo
+    {
+        path: "/:pathMatch(.*)*",
+        name: "notfound",
+        component: NotFound,
     }
 ];
 const router = createRouter({
