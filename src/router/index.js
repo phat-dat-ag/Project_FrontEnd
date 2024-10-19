@@ -17,6 +17,20 @@ const routes = [
         path: "/reader",
         name: "reader",
         component: Reader,
+        children: [
+            {
+                path: "edit:id",
+                name: "reader.edit",
+                component: () => import("@/views/ReaderEdit.vue"),
+                props: true,
+            },
+            {
+                path: "add",
+                name: "reader.add",
+                component: () => import("@/views/ReaderAdd.vue"),
+                props: true,
+            }
+        ]
     },
     {
         path: "/book",
