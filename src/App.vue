@@ -1,11 +1,9 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
-import ReaderService from './services/reader.service';
-import Home from './views/Home.vue';
 
 export default {
   components: {
-    AppHeader, Home
+    AppHeader
   },
 }
 </script>

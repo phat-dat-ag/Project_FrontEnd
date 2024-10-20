@@ -1,5 +1,5 @@
 <script>
-import ReaderCard from './ReaderCard.vue';
+import ReaderCard from '@/components/Reader/ReaderCard.vue';
 export default {
     components: {
         ReaderCard,

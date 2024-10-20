@@ -1,6 +1,6 @@
 <script>
 import InputSearch from '@/components/InputSearch.vue';
-import ReaderList from '@/components/ReaderList.vue';
+import ReaderList from '@/components/Reader/ReaderList.vue';
 import readerService from '@/services/reader.service';
 export default {
     components: {

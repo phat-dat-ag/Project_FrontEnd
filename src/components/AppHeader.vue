@@ -34,7 +34,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'track' }" class="nav-link">
+                        <router-link :to="{ name: 'transaction' }" class="nav-link">
                             Theo dõi mượn sách
                         </router-link>
                     </li>

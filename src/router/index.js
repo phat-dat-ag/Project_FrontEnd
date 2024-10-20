@@ -4,7 +4,7 @@ import Reader from "@/views/Reader.vue";
 import Book from "@/views/Book.vue";
 import Publisher from "@/views/Publisher.vue";
 import Staff from "@/views/Staff.vue";
-import Track from "@/views/Track.vue";
+import Transaction from "@/views/Transaction.vue";
 import NotFound from "@/views/NotFound.vue";
 
 const routes = [
@@ -21,13 +21,13 @@ const routes = [
             {
                 path: "edit:id",
                 name: "reader.edit",
-                component: () => import("@/views/ReaderEdit.vue"),
+                component: () => import("@/components/Reader/ReaderEdit.vue"),
                 props: true,
             },
             {
                 path: "add",
                 name: "reader.add",
-                component: () => import("@/views/ReaderAdd.vue"),
+                component: () => import("@/components/Reader/ReaderAdd.vue"),
                 props: true,
             }
         ]
@@ -48,9 +48,9 @@ const routes = [
         component: Staff,
     },
     {
-        path: "/track",
-        name: "track",
-        component: Track,
+        path: "/transaction",
+        name: "transaction",
+        component: Transaction,
     },
     // Đón các đường dẫn không tồn tại để thông báo
     {

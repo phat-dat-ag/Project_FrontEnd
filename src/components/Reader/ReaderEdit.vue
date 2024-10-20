@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ReaderForm from "@/components/ReaderForm.vue";
+import ReaderForm from "@/components/Reader/ReaderForm.vue";
 import readerService from "@/services/reader.service";
 export default {
     components: {
