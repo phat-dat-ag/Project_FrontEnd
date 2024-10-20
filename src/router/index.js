@@ -36,6 +36,21 @@ const routes = [
         path: "/book",
         name: "book",
         component: Book,
+        children: [
+            {
+                path: "edit:id",
+                name: "book.edit",
+                component: () => import("@/components/Book/BookEdit.vue"),
+                props: true,
+            },
+            {
+                path: "add",
+                name: "book.add",
+                component: () => import("@/components/Book/BookAdd.vue"),
+                props: true,
+            }
+
+        ]
     },
     {
         path: "/publisher",
