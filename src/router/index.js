@@ -46,6 +46,20 @@ const routes = [
         path: "/staff",
         name: "staff",
         component: Staff,
+        children: [
+            {
+                path: "staff:id",
+                name: "staff.edit",
+                component: () => import("@/components/Staff/StaffEdit.vue"),
+                props: true,
+            },
+            {
+                path: "add",
+                name: "staff.add",
+                component: () => import("@/components/Staff/StaffAdd.vue"),
+                props: true,
+            }
+        ]
     },
     {
         path: "/transaction",

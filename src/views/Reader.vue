@@ -114,7 +114,7 @@ export default {
                     <p v-else>Không có liên hệ nào.</p>
                 </div>
 
-                <!-- ReaderCard: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
+                <!-- ReaderAdd và ReaderEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
                     <!-- Truyền xuống cho ReaderAdd và ReaderEdit -->
                     <!-- Nơi xuất hiện của ReaderAdd và ReaderEdit -->

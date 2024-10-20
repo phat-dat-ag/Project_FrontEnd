@@ -92,7 +92,7 @@ export default {
                 .string()
                 .email("E-mail không đúng.")
                 .max(50, "E-mail tối đa 50 ký tự."),
-            address: yup.string().max(100, "Địa chỉ tối đa 100 ký tự."),
+            address: yup.string().required("Địa chỉ là bắt buộc.").max(100, "Địa chỉ tối đa 100 ký tự."),
             phone: yup
                 .string()
                 .matches(
