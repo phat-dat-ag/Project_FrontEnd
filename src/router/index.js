@@ -41,6 +41,20 @@ const routes = [
         path: "/publisher",
         name: "publisher",
         component: Publisher,
+        children: [
+            {
+                path: "publisher:id",
+                name: "publisher.edit",
+                component: () => import("@/components/Publisher/PublisherEdit.vue"),
+                props: true,
+            },
+            {
+                path: "add",
+                name: "publisher.add",
+                component: () => import("@/components/Publisher/PublisherAdd.vue"),
+                props: true,
+            }
+        ]
     },
     {
         path: "/staff",
