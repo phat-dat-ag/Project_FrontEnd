@@ -94,6 +94,21 @@ const routes = [
         path: "/transaction",
         name: "transaction",
         component: Transaction,
+        children: [
+            {
+                path: "edit:id",
+                name: "transaction.edit",
+                component: () => import("@/components/Transaction/TransactionEdit.vue"),
+                props: true,
+            },
+            {
+                path: "add",
+                name: "transaction.add",
+                component: () => import("@/components/Transaction/TransactionAdd.vue"),
+                props: true,
+            }
+
+        ]
     },
     // Đón các đường dẫn không tồn tại để thông báo
     {
