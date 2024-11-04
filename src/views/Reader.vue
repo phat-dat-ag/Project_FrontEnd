@@ -91,7 +91,7 @@ export default {
                 <!-- ReaderList: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
 
                 <div class="col-12 col-md-6">
-                    <h4>Danh bạ</h4>
+                    <h4>Danh sách Độc giả</h4>
                     <!-- Đã responsive -->
                     <div class="row">
                         <!-- Button "Làm mới" -->
@@ -111,7 +111,7 @@ export default {
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
                     <ReaderList v-if="filteredReadersCount > 0" :readers="filteredReaders"
                         v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có liên hệ nào.</p>
+                    <p v-else>Không có Độc giả nào.</p>
                 </div>
 
                 <!-- ReaderAdd và ReaderEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

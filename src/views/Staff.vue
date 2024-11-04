@@ -90,7 +90,7 @@ export default {
                 <!-- StaffList: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
 
                 <div class="col-12 col-md-6">
-                    <h4>Danh bạ</h4>
+                    <h4>Danh sách Nhân viên</h4>
                     <!-- Đã responsive -->
                     <div class="row">
                         <!-- Button "Làm mới" -->
@@ -110,7 +110,7 @@ export default {
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
                     <StaffList v-if="filteredStaffsCount > 0" :staffs="filteredStaffs"
                         v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có liên hệ nào.</p>
+                    <p v-else>Không có Nhân viên nào.</p>
                 </div>
 
                 <!-- StaffCard và StaffEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

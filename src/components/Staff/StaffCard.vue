@@ -8,7 +8,7 @@ export default {
 <template>
     <div class="card" style="width: 20rem;">
         <div class="card-header">
-            Chi tiết liên hệ
+            Chi tiết Nhân viên
         </div>
         <!-- fullname, username, password, titile, address -->
         <!-- Không show password -->

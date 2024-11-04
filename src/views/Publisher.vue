@@ -91,7 +91,7 @@ export default {
             <div class="row">
                 <!-- PublisherList: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
-                    <h4>Danh bạ</h4>
+                    <h4>Danh sách Nhà xuất bản</h4>
                     <!-- Đã responsive -->
                     <div class="row">
                         <!-- Button "Làm mới" -->
@@ -111,7 +111,7 @@ export default {
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
                     <PublisherList v-if="filteredPublishersCount > 0" :publishers="filteredPublishers"
                         v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có liên hệ nào.</p>
+                    <p v-else>Không có Nhà xuất bản nào.</p>
                 </div>
 
                 <!-- PublisherAdd và PublisherEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

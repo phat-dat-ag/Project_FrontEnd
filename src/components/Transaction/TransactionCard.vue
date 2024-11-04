@@ -31,7 +31,7 @@ export default {
 <template>
     <div class="card" style="width: 20rem;">
         <div class="card-header">
-            Chi tiết biên nhận
+            Chi tiết mượn sách
         </div>
         <!-- book_id, reader_id, staff_id, borrow_date, return_date -->
         <ul class="list-group list-group-flush">

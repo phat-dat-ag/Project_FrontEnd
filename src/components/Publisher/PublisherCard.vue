@@ -8,7 +8,7 @@ export default {
 <template>
     <div class="card" style="width: 20rem;">
         <div class="card-header">
-            Chi tiết liên hệ
+            Chi tiết Nhà xuất bản
         </div>
         <!-- address, name -->
         <ul class="list-group list-group-flush">

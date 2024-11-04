@@ -1,6 +1,6 @@
 <template>
     <div v-if="transaction">
-        <h4>Hiệu chỉnh Theo dõi mượn sách</h4>
+        <h4>Hiệu chỉnh Chi tiết mượn sách</h4>
         <!-- Dù updateTransaction nhận tham số, nhưng nó là từ sự kiện emit mà, deleteTransaction cũng vậy -->
         <TransactionForm :transaction="transaction" @submit:transaction="updateTransaction"
             @delete:transaction="deleteTransaction" />

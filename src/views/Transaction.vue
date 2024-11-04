@@ -60,7 +60,7 @@ export default {
         },
         // Chức năng Xóa tất cả: Đi đến CSDL xóa toàn bộ các transaction
         async removeTransactionList() {
-            if (confirm("Xóa hết các theo dõi mượn sách?")) {
+            if (confirm("Xóa hết lịch sử mượn sách?")) {
                 try {
                     await transactionService.deleteAll();
                     this.refreshTransactionList();
@@ -82,7 +82,7 @@ export default {
 }
 </script>
 <template>
-    <h1>Quản lý Theo dõi mượn sách</h1>
+    <h1>Theo dõi mượn sách</h1>
     <div class="row">
         <!-- Liên kết 2 chiều, dùng một props mặc định là modelValue, và khi dữ liệu thay đổi thì dùng event update:modelValue -->
         <InputSearch v-model="searchText"></InputSearch>
@@ -91,7 +91,7 @@ export default {
                 <!-- TransactionList: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
 
                 <div class="col-12 col-md-6">
-                    <h4>Biên nhận Mượn sách</h4>
+                    <h4>Lịch sử mượn sách</h4>
                     <!-- Đã responsive -->
                     <div class="row">
                         <!-- Button "Làm mới" -->
@@ -115,7 +115,7 @@ export default {
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
                     <TransactionList v-if="filteredTransactionsCount > 0" :transactions="filteredTransactions"
                         v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có biên nhận nào.</p>
+                    <p v-else>Không có Lịch sử mượn sách nào.</p>
                 </div>
 
                 <!-- TransactionAdd và TransactionEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

@@ -38,12 +38,6 @@
             <Field name="birthday" type="date" class="form-control" v-model="readerLocal.birthday" />
             <ErrorMessage name="birthday" class="error-feedback" />
         </div>
-        <div class="form-group form-check">
-            <input name="favorite" type="checkbox" class="form-check-input" v-model="readerLocal.favorite" />
-            <label for="favorite" class="form-check-label">
-                <strong>Liên hệ yêu thích</strong>
-            </label>
-        </div>
         <!-- 3 cái button: Lưu, Xóa (chỉ có ở update), Thoát -->
         <div class="form-group row">
             <div class="col-12 col-md-4 mb-2">
