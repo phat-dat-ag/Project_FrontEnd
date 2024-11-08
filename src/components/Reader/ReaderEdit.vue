@@ -2,7 +2,7 @@
     <div v-if="reader">
         <h4>Hiệu chỉnh Độc giả</h4>
         <!-- Dù updateHeader nhận tham số, nhưng nó là từ sự kiện emit mà, deleteReader cũng vậy -->
-        <ReaderForm :reader="reader" @submit:reader="updateReader" @delete:reader="deleteReader" />
+        <ReaderForm :isAdded="false" :reader="reader" @submit:reader="updateReader" @delete:reader="deleteReader" />
         <p>{{ message }}</p>
     </div>
 </template>

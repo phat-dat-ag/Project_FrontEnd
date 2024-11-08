@@ -1,17 +1,38 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
+import ReaderInterface from './components/ReaderInterface.vue';
+import StaffInterface from './components/StaffInterface.vue';
+import Login from './components/Login.vue';
 
 export default {
   components: {
-    AppHeader
+    AppHeader, ReaderInterface, StaffInterface, Login,
   },
+  data() {
+    return {
+      isLogin: {},
+    };
+  },
+  computed: {
+    // Xác định giao diện cần hiển thị
+    userInterface() {
+      if (this.isLogin.status)
+        return this.isLogin.type === "reader" ? "ReaderInterface" : "StaffInterface";
+      // có sự khác biệt với false, null là không có gì cả
+      return null;
+    }
+  }
 }
 </script>
 
 <template>
-  <AppHeader></AppHeader>
+  <!-- Không đăng nhập thành công thì hiển thị Đăng nhập -->
+  <Login v-if="!isLogin.status" v-model:modelValue="isLogin"></Login>
+  <!-- Hiển thị người dùng ứng với tài khoản của họ -->
+  <component v-if="isLogin.status" :is="userInterface"></component>
+  <!-- <AppHeader></AppHeader> -->
   <!-- Đón các Component khi chuyển hướng của AppHeader -->
-  <router-view></router-view>
+  <!-- <router-view></router-view> -->
 </template>
 
 <style>

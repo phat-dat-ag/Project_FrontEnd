@@ -21,4 +21,10 @@ class ReaderService {
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;
     }
+    async isExistingUsername(username) {
+        return (await this.api.get(`/check/${username}`)).data;
+    }
+    async login(data) {
+        return (await this.api.post(`/login`, data)).data;
+    }
 } export default new ReaderService();

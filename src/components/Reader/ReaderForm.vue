@@ -11,6 +11,18 @@
             <Field name="last_name" type="text" class="form-control" v-model="readerLocal.last_name" />
             <ErrorMessage name="last_name" class="error-feedback" />
         </div>
+        <!-- Nếu là Thêm thì mới hiển thị -->
+        <div v-if="isAdded" class="form-group">
+            <label for="username">Tên đăng nhập</label>
+            <Field name="username" type="text" class="form-control" v-model="readerLocal.username" />
+            <ErrorMessage name="username" class="error-feedback"></ErrorMessage>
+        </div>
+        <!-- Nếu là Thêm thì mới hiển thị -->
+        <div v-if="isAdded" class="form-group">
+            <label for="password">Mật khẩu</label>
+            <Field name="password" type="password" class="form-control" v-model="readerLocal.password" />
+            <ErrorMessage name="password" class="error-feedback"></ErrorMessage>
+        </div>
         <div class="form-group">
             <label for="address">Địa chỉ</label>
             <Field name="address" type="text" class="form-control" v-model="readerLocal.address" />
@@ -60,6 +72,7 @@
 <script>
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import "@/usernameValidation";
 export default {
     components: {
         Form,
@@ -68,10 +81,12 @@ export default {
     },
     emits: ["submit:reader", "delete:reader"],
     props: {
-        reader: { type: Object, required: true }
+        reader: { type: Object, required: true },
+        // Kiểm soát để hiển thị password và username
+        isAdded: { required: true, },
     },
     data() {
-        const readerFormSchema = yup.object().shape({
+        let validation = {
             first_name: yup
                 .string()
                 .required("Họ phải có giá trị.")
@@ -100,7 +115,25 @@ export default {
             birthday: yup
                 .date()
                 .required("Ngày sinh là bắt buộc."),
-        });
+        };
+        // Chỉ xác thực khi Thêm, vì không cho Admin cập nhật username và password
+        if (this.isAdded) {
+            validation = {
+                ...validation,
+                username: yup
+                    .string()
+                    .required("Tên đăng nhập phải có giá trị.")
+                    .min(8, "Tên đăng nhập phải ít nhất 8 ký tự.")
+                    .max(30, "Tên đăng nhập có nhiều nhất 30 ký tự.")
+                    .checkUsername(),
+                password: yup
+                    .string()
+                    .required("Mật khẩu phải có giá trị.")
+                    .min(8, "Mật khẩu phải ít nhất 8 ký tự.")
+                    .max(20, "Mật khẩu có nhiều nhất 20 ký tự."),
+            }
+        }
+        const readerFormSchema = yup.object().shape(validation);
         return {
             // Không hiệu chỉnh props, nên tạo biến cục bộ readerLocal để liên kết với các input trên form
             readerLocal: this.reader,

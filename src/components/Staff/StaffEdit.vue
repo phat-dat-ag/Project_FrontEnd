@@ -2,7 +2,8 @@
     <div v-if="staff">
         <h4>Hiệu chỉnh Nhân viên </h4>
         <!-- Dù updateStaff nhận tham số, nhưng nó là từ sự kiện emit mà, deleteStaff cũng vậy -->
-        <StaffForm :staff="staff" @submit:staff="updateStaff" @delete:staff="deleteStaff" />
+        <!-- Để admin không được phép thay đổi và xem mật khẩu -->
+        <StaffForm :isAdded="false" :staff="staff" @submit:staff="updateStaff" @delete:staff="deleteStaff" />
         <p>{{ message }}</p>
     </div>
 </template>

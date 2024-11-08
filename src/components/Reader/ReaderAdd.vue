@@ -2,7 +2,7 @@
     <div>
         <h4>Thêm Độc giả</h4>
         <!-- Dù addReader nhận tham số, nhưng nó là từ sự kiện emit mà -->
-        <ReaderForm :reader="reader" @submit:reader="addReader" />
+        <ReaderForm :isAdded="true" :reader="reader" @submit:reader="addReader" />
         <p>{{ message }}</p>
     </div>
 </template>
