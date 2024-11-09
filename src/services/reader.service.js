@@ -25,6 +25,10 @@ class ReaderService {
         return (await this.api.get(`/check/${username}`)).data;
     }
     async login(data) {
-        return (await this.api.post(`/login`, data)).data;
+        return (await this.api.post(`/login/account`, data)).data;
+    }
+    // Phương thức lấy thông tin nhân viên bằng token
+    async getProfile(token) {
+        return (await this.api.get("/login/profile", { headers: { Authorization: `Bearer ${token}` } })).data;
     }
 } export default new ReaderService();

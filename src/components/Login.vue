@@ -26,44 +26,42 @@ export default {
         };
     },
     methods: {
-        async ReaderLogin() {
+        async login(type) {
             const input = { username: this.username, password: this.password };
-            // Vào CSDL lấy reader có username được nhập ra
-            const result = await readerService.login(input);
-            let message = { type: "reader" };
-            if (result) {
-                console.log("Đăng nhập thành công cho tài khoản Độc giả: " + input.username);
-                this.$emit("update:modelValue", { ...message, status: true });
+            let result = false;
+            // trả về {success,  token}
+            // nếu thất bại thì result là false từ BE trả về, không phải Object
+            if (type === "reader")
+                result = await readerService.login(input);
+            else if (type === "staff")
+                result = await staffService.login(input);
+
+            // kiểm đăng nhập thành công cùng với token được trả về
+            if (result && result.token) {
+                console.log(`Đăng nhập thành công cho ${type}: ` + input.username);
+                // lưu token lên localStorage
+                localStorage.setItem("token", result.token);
+                let userInfor = {};
+                if (type === "reader") {
+                    userInfor = await readerService.getProfile(result.token);
+                } else if (type === "staff") {
+                    userInfor = await staffService.getProfile(result.token);
+                }
+                this.$emit("update:modelValue", { type, status: true, userInfor, token: result.token });
                 return true;
             }
             else {
-                console.log("Đăng nhập thất bại cho tài khoản Độc giả: " + input.username);
-                this.$emit("update:modelValue", { ...message, status: false });
-                return false;
-            }
-        },
-        async StaffLogin() {
-            const input = { username: this.username, password: this.password };
-            // Vào CSDL lấy staff có username được nhập ra
-            const result = await staffService.login(input);
-            let message = { type: "staff" };
-            if (result) {
-                console.log("Đăng nhập thành công cho tài khoản Nhân viên: " + input.username);
-                this.$emit("update:modelValue", { ...message, status: true });
-                return true;
-            }
-            else {
-                console.log("Đăng nhập thất bại cho tài khoản Nhân viên: " + input.username);
-                this.$emit("update:modelValue", { ...message, status: false });
+                console.log(`Đăng nhập thất bại cho ${type}: ` + input.username);
+                this.$emit("update:modelValue", { type, status: false });
                 return false;
             }
         },
         async requestLogin() {
             // Kiểm tra có phải là Reader
-            let check = await this.ReaderLogin();
+            let check = await this.login("reader");
             // Kiểm tra có phải là Staff
             if (!check)
-                check = await this.StaffLogin();
+                check = await this.login("staff");
             // Đăng nhập thất bại hoàn toàn
             if (!check)
                 confirm("Đăng nhập thất bại rồi cưng!")
