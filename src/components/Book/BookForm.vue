@@ -7,6 +7,12 @@
             <ErrorMessage name="name" class="error-feedback" />
         </div>
         <div class="form-group">
+            <label for="img">Tải ảnh sách</label>
+            <!-- Chỉ cho phép tải ảnh -->
+            <Field name="img" type="file" accept="image/*" @change="handleImageChange" class="form-control" />
+            <ErrorMessage name="img" class="error-feedback" />
+        </div>
+        <div class="form-group">
             <label for="price">Giá sách (VND)</label>
             <Field name="price" type="number" class="form-control" v-model="bookLocal.price" />
             <ErrorMessage name="price" class="error-feedback" />
@@ -48,6 +54,7 @@
 <script>
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import bookService from "@/services/book.service";
 export default {
     components: {
         Form,
@@ -90,6 +97,7 @@ export default {
             // Không hiệu chỉnh props, nên tạo biến cục bộ bookLocal để liên kết với các input trên form
             bookLocal: this.book,
             bookFormSchema,
+            selectedFile: null,
         };
     },
     // Thêm cái này để theo dõi, mỗi khi book thay đổi thì thay đổi thông tin trong Form
@@ -104,7 +112,13 @@ export default {
     },
     methods: {
         // Lưu: dùng cho cả Add và Edit
-        submitBook() {
+        async submitBook() {
+            if (!this.selectedFile) {
+                alert("Phải chọn ảnh sách!");
+                return;
+            }
+            // phải chọn ảnh mới cho thêm
+            await this.handleSubmitImage();
             this.$emit("submit:book", this.bookLocal);
         },
         // Xóa: dùng cho Edit
@@ -117,7 +131,22 @@ export default {
             if (!reply) {
                 return false;
             } else this.$router.push({ name: "book" });
-        }
+        },
+        // Mỗi khi chọn ảnh mới là cập nhật
+        handleImageChange(e) {
+            this.selectedFile = e.target.files[0];
+        },
+        async handleSubmitImage() {
+            if (this.selectedFile) {
+                try {
+                    const respone = await bookService.uploadBookImage(this.selectedFile);
+                    this.bookLocal.img = respone.imageUrl;
+                    console.log(respone);
+                } catch (error) {
+                    console.error("Error uploading image:", error);
+                }
+            }
+        },
     },
 };
 </script>

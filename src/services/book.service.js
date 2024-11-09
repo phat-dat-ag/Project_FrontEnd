@@ -22,6 +22,19 @@ class BookService {
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;
     }
+    async uploadBookImage(imageFile) {
+        // Tạo một FormData object
+        const formData = new FormData();
+        // Gửi file ảnh lên với key là 'img'
+        formData.append('img', imageFile);
+
+        // Gửi yêu cầu POST với formData chứa file ảnh
+        return (await this.api.post("/upload/image", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Chỉ định kiểu dữ liệu là multipart/form-data
+            }
+        })).data;
+    }
 }
 
 export default new BookService();
