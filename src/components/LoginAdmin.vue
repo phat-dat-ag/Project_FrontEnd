@@ -1,8 +1,7 @@
 <script>
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
-import readerService from "@/services/reader.service";
-import staffService from "@/services/staff.service";
+import adminService from "@/services/admin.service";
 
 export default {
     components: {
@@ -26,48 +25,35 @@ export default {
         };
     },
     methods: {
-        async login(type) {
+        async login() {
             const input = { username: this.username, password: this.password };
-            let result = false;
-            // trả về {success,  token}
+            let result = await adminService.login(input);
+            // result trả về {success,  token} khi thành công
             // nếu thất bại thì result là false từ BE trả về, không phải Object
-            if (type === "reader")
-                result = await readerService.login(input);
-            else if (type === "staff")
-                result = await staffService.login(input);
-
+            console.log(result);
             // kiểm đăng nhập thành công cùng với token được trả về
             if (result && result.token) {
-                console.log(`Đăng nhập thành công cho ${type}: ` + input.username);
+                console.log(`Đăng nhập admin thành công cho: ` + input.username);
                 // lưu token lên localStorage
                 localStorage.setItem("token", result.token);
-                let userInfor = {};
-                if (type === "reader") {
-                    userInfor = await readerService.getProfile(result.token);
-                } else if (type === "staff") {
-                    userInfor = await staffService.getProfile(result.token);
-                }
-                this.$emit("update:modelValue", { ...this.modelValue, status: true, type, userInfor, token: result.token });
+                let userInfor = await adminService.getProfile(result.token);
+                this.$emit("update:modelValue", { ...this.modelValue, status: true, type: "admin", userInfor, token: result.token });
                 return true;
             }
             else {
-                console.log(`Đăng nhập thất bại cho ${type}: ` + input.username);
-                this.$emit("update:modelValue", { ...this.modelValue, type });
+                console.log(`Đăng nhập thất bại cho admin: ` + input.username);
+                this.$emit("update:modelValue", { ...this.modelValue, type: "admin" });
                 return false;
             }
         },
-        async requestLogin() {
-            // Kiểm tra có phải là Reader
-            let check = await this.login("reader");
-            // Kiểm tra có phải là Staff
+        async requestLoginAdmin() {
+            // Đăng nhập Admin
+            let check = await this.login();
             if (!check)
-                check = await this.login("staff");
-            // Đăng nhập thất bại hoàn toàn
-            if (!check)
-                confirm("Đăng nhập thất bại rồi cưng!")
+                confirm("Đăng nhập Admin thất bại rồi cưng!")
         },
         async submitForm() {
-            await this.requestLogin();
+            await this.requestLoginAdmin();
         },
         async changeRoleLogin() {
             this.$emit("update:modelValue", { role: this.modelValue.role * (-1) })

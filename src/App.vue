@@ -3,16 +3,21 @@ import AppHeader from './components/AppHeader.vue';
 import ReaderInterface from './components/ReaderInterface.vue';
 import StaffInterface from './components/StaffInterface.vue';
 import Login from './components/Login.vue';
+import LoginAdmin from './components/LoginAdmin.vue';
 
 export default {
   components: {
-    AppHeader, ReaderInterface, StaffInterface, Login,
+    AppHeader, ReaderInterface, StaffInterface, Login, LoginAdmin
   },
   data() {
     return {
       // Nó đầy đủ sẽ có type, status, userInfor, token,
       // nếu đăng nhập không thành công thì là type=staff, status=false 
-      isLogin: {},
+      isLogin: {
+        // role: user (1) or admin (-1)
+        role: 1,
+        status: false,
+      },
       userInfor: {},
     };
   },
@@ -31,7 +36,10 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("token");
-      this.isLogin = {};
+      this.isLogin = {
+        role: 1,
+        status: false,
+      };
     }
   },
 }
@@ -39,13 +47,17 @@ export default {
 
 <template>
   <!-- Không đăng nhập thành công thì hiển thị Đăng nhập -->
-  <!-- <Login v-if="!isLogin.status" v-model:modelValue="isLogin"></Login> -->
-  <!-- Hiển thị người dùng ứng với tài khoản của họ -->
-  <!-- <component v-if="isLogin.status" :is="userInterface" :userInfor="userInfor" @logout="logout"></component> -->
+  <Login v-if="!isLogin.status && this.isLogin.role === 1" v-model:modelValue="isLogin"></Login>
+  <LoginAdmin v-if="!isLogin.status && this.isLogin.role === -1" v-model:modelValue="isLogin"></LoginAdmin>
 
-  <AppHeader></AppHeader>
-  <!-- Đón các Component khi chuyển hướng của AppHeader -->
-  <router-view></router-view>
+  <!-- Hiển thị người dùng ứng với tài khoản của họ -->
+  <component v-if="isLogin.role === 1 && isLogin.status" :is="userInterface" :userInfor="userInfor" @logout="logout">
+  </component>
+
+  <!-- Hiển thị nếu đó là Admin -->
+  <AppHeader v-if="isLogin.status && this.isLogin.role === -1" :userInfor="isLogin.userInfor" @logout="logout">
+  </AppHeader>
+
 </template>
 
 <style>
