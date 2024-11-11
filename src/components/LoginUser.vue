@@ -1,6 +1,8 @@
 <script>
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import readerService from "@/services/reader.service";
+import staffService from "@/services/staff.service";
 import adminService from "@/services/admin.service";
 
 export default {
@@ -30,31 +32,75 @@ export default {
             // Đăng nhập thất bại => false
 
             // Kiểm tra coi phải là reader không
-            result = await adminService.login(input);
+            result = await readerService.login(input);
+            // Không phải reader => kiểm tra phải là staff không
+            if (!result)
+                result = await staffService.login(input);
 
-            // Khi đã đăng nhập thành công
+            // Khi đã đăng nhập thành công: là reader hoặc staff
             if (result && result.token) {
                 // lưu token lên localStorage
                 localStorage.setItem("token", result.token);
                 const token = localStorage.getItem("token");
                 if (token) {
+                    let userReader = await readerService.getProfile(token);
+                    // Là Reader
+                    if (userReader) {
+                        this.$router.push({ name: "interfaceReader" });
+                    } else {
+                        let userStaff = await staffService.getProfile(token);
+                        // Là Staff
+                        if (userStaff) {
+                            this.$router.push({ name: "interfaceStaff" });
+                        }
+                    }
+                }
+            }
+            // Khi đăng nhập đã thất bại cho cả reader và staff
+            else
+                confirm("Đăng nhập thất bại rồi cưng!");
+        },
+        changeRoleLogin() {
+            this.$router.push({ name: "loginAdmin" });
+        },
+        async checkPreLogin() {
+            const token = localStorage.getItem("token");
+            if (token) {
+                let account = await adminService.getProfile(token);
+                // Nếu không phải admin
+                if (!account) {
+                    account = await readerService.getProfile(token);
+                    // Nếu không phải là reader
+                    if (!account) {
+                        account = await staffService.getProfile(token);
+                        // Nếu không phải là staff thì thôi => Trước đó đã đăng xuất tài khoản hết rồi
+                        if (!account) {
+                        } else {
+                            // Là staff
+                            this.$router.push({ name: "interfaceStaff" });
+                        }
+                    } else {
+                        // Là reader
+                        this.$router.push({ name: "interfaceReader" });
+                    }
+                } else {
+                    // Là admin
                     this.$router.push({ name: "interfaceAdmin" });
                 }
             }
-            // Khi đăng nhập đã thất bại
-            else
-                confirm("Đăng nhập Admin thất bại rồi cưng!");
         },
-        async changeRoleLogin() {
-            this.$router.push({ name: "loginUser" });
-        }
+    },
+    // LoginUser là trang gốc, luôn được tải đầu tiên
+    // Nên trước khi tải trang phải kiểm tra coi còn phiên đăng nhập không
+    beforeMount() {
+        this.checkPreLogin();
     },
 };
 </script>
 
 <template>
     <div class="form-container">
-        <h1 class="text-center">Đăng nhập <br>Quản trị viên</h1>
+        <h1 class="text-center">Đăng nhập <br>Người dùng</h1>
         <Form :validation-schema="FormSchema" @submit="login">
             <div class="form-group mb-3">
                 <label for="username">Tên đăng nhập</label>
@@ -75,7 +121,7 @@ export default {
             <div class="form-group">
                 <!-- type = button: không cho phép submit form -->
                 <button class="btn btn-danger w-100 mt-2" type="button" @click="changeRoleLogin">
-                    Đăng nhập với vai trò Người dùng
+                    Đăng nhập với vai trò Quản trị viên
                 </button>
             </div>
         </Form>

@@ -35,12 +35,10 @@ export default {
     methods: {
         async getBooks() {
             this.books = await bookService.getAll();
-            console.log(this.books.length);
         }
     },
     created() {
         this.getBooks();
     }
 }
-
 </script>
