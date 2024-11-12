@@ -19,20 +19,50 @@
                         </router-link>
                     </li>
                 </ul>
-                <button class="btn btn-danger ms-auto" @click="logout">Đăng xuất</button>
             </div>
-            <router-view></router-view>
         </div>
     </nav>
+    <router-view></router-view>
+    <MyAccount :myInfor="accountInfor"></MyAccount>
 </template>
 <script>
+import readerService from '@/services/reader.service';
+import MyAccount from './MyAccount.vue';
 
 export default {
-    methods: {
-        logout() {
-            localStorage.removeItem("token");
-            this.$router.push({ name: "loginUser" });
-        },
+    data() {
+        return {
+            accountInfor: {},
+        }
     },
+    components: {
+        MyAccount,
+    },
+    methods: {
+        async getAccountInfor() {
+            let newInfor = {
+                first_name: { label: "Họ", },
+                last_name: { label: "Tên", },
+                username: { label: "Tên đăng nhập", },
+                birthday: { label: "Sinh nhật", },
+                sex: { label: "Giới tính", },
+                address: { label: "Địa chỉ", },
+                phone: { label: "Số điện thoại", },
+
+            }
+            const token = localStorage.getItem("token");
+            const inforDB = await readerService.getProfile(token);
+            // Bỏ cái trường ID ra
+            const { _id, ...infor } = inforDB;
+            for (let key in infor) {
+                newInfor[key] = { ...newInfor[key], value: infor[key] };
+            }
+            this.accountInfor = newInfor;
+        }
+    },
+    beforeMount() {
+        // Lấy thông tin người dùng
+        this.getAccountInfor();
+    }
 }
 </script>
