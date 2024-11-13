@@ -39,6 +39,14 @@ export default {
             this.newPublisherList = newsPublisher;
         }
     },
+    // Danh sách hiển thị cần thay đổi thì cập nhật
+    // Hỗ trợ refresh
+    watch: {
+        publishers() {
+            this.newPublisherList = [];
+            this.getNewPublishers();
+        }
+    },
     created() {
         this.getNewPublishers();
     }

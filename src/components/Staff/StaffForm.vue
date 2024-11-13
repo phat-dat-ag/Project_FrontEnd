@@ -73,7 +73,7 @@ export default {
                 .string()
                 .required("Họ và tên phải có giá trị.")
                 .min(2, "Họ phải ít nhất 2 ký tự.")
-                .max(50, "Họ có nhiều nhất 50 ký tự."),
+                .max(50, "Họ và tên có nhiều nhất 50 ký tự."),
             address: yup.string().required("Địa chỉ là bắt buộc.").max(100, "Địa chỉ tối đa 100 ký tự."),
         };
         // Chỉ xác thực khi Thêm, vì không cho Admin cập nhật username và password

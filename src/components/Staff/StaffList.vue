@@ -41,6 +41,14 @@ export default {
             this.newStaffList = newStaff;
         }
     },
+    // Danh sách hiển thị cần thay đổi thì cập nhật
+    // Hỗ trợ refresh
+    watch: {
+        staffs() {
+            this.newStaffList = [];
+            this.getNewStaffs();
+        }
+    },
     created() {
         this.getNewStaffs();
     }

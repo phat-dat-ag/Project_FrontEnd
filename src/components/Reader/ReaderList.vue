@@ -44,6 +44,14 @@ export default {
             this.newReaderList = newReaders;
         }
     },
+    // Danh sách hiển thị cần thay đổi thì cập nhật
+    // Hỗ trợ refresh
+    watch: {
+        readers() {
+            this.newReaderList = [];
+            this.getNewReaders();
+        }
+    },
     created() {
         this.getNewReaders();
     }

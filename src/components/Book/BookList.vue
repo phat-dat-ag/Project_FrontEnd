@@ -42,6 +42,14 @@ export default {
             this.newBookList = newBooks;
         }
     },
+    // Danh sách hiển thị cần thay đổi thì cập nhật
+    // Hỗ trợ refresh
+    watch: {
+        books() {
+            this.newBookList = [];
+            this.getNewBooks();
+        }
+    },
     created() {
         this.getNewBooks();
     }
