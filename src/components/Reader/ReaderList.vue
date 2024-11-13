@@ -1,8 +1,13 @@
 <script>
-import ReaderCard from '@/components/Reader/ReaderCard.vue';
+import Card from '../Card.vue';
 export default {
     components: {
-        ReaderCard,
+        Card,
+    },
+    data() {
+        return {
+            newReaderList: [],
+        }
     },
     props: {
         readers: { type: Array, default: [], require: true },
@@ -14,21 +19,46 @@ export default {
         // Phát đi 1 sự kiện khi click chọn một reader
         updateActiveIndex(index) {
             this.$emit("update:activeIndex", index);
+        },
+        changeToNewReader(reader) {
+            let newInfor = {
+                _id: { label: "Mã độc giả", },
+                first_name: { label: "Họ", },
+                last_name: { label: "Tên", },
+                username: { label: "Tên đăng nhập", },
+                birthday: { label: "Sinh nhật", },
+                sex: { label: "Giới tính", },
+                address: { label: "Địa chỉ", },
+                phone: { label: "Số điện thoại", },
+            };
+            for (let key in newInfor) {
+                newInfor[key] = { ...newInfor[key], value: reader[key] };
+            }
+            return newInfor;
+        },
+        getNewReaders() {
+            let newReaders = [];
+            this.readers.forEach((reader) => {
+                newReaders.push(this.changeToNewReader(reader));
+            });
+            this.newReaderList = newReaders;
         }
+    },
+    created() {
+        this.getNewReaders();
     }
 }
 </script>
 <template>
-    <!-- address, birthday, favorite, first_name, last_name, phone, sex -->
     <ul class="list-group">
-        <li class="list-group-item list-group-item-dark" v-for="(reader, index) in readers" :key="index"
+        <li class="list-group-item list-group-item-dark" v-for="(reader, index) in newReaderList" :key="index"
             :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-            {{ reader.first_name }} {{ reader.last_name }}
+            {{ reader.first_name.value }} {{ reader.last_name.value }}
             <div v-if="index === activeIndex">
-                <ReaderCard :reader="reader"></ReaderCard>
+                <Card :Infor="reader" :title="'Thông tin về độc giả'"></Card>
                 <router-link :to="{
                     name: 'reader.edit',
-                    params: { id: reader._id },
+                    params: { id: reader._id.value },
                 }">
                     <button class="btn btn-warning">Hiệu chỉnh</button>
                 </router-link>

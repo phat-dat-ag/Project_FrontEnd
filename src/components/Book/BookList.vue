@@ -1,8 +1,13 @@
 <script>
-import BookCard from '@/components/Book/BookCard.vue';
+import Card from '../Card.vue';
 export default {
     components: {
-        BookCard,
+        Card
+    },
+    data() {
+        return {
+            newBookList: [],
+        }
     },
     props: {
         books: { type: Array, default: [], require: true },
@@ -14,7 +19,31 @@ export default {
         // Phát đi 1 sự kiện khi click chọn một book
         updateActiveIndex(index) {
             this.$emit("update:activeIndex", index);
+        },
+        changeToNewBook(book) {
+            let newInfor = {
+                _id: { label: "Mã sách", },
+                name: { label: "Tên sách" },
+                author: { label: "Tác giả" },
+                price: { label: "Giá sách" },
+                quantity: { label: "Số lượng" },
+                publication_year: { label: "Năm xuất bản" },
+            };
+            for (let key in newInfor) {
+                newInfor[key] = { ...newInfor[key], value: book[key] };
+            }
+            return newInfor;
+        },
+        getNewBooks() {
+            let newBooks = [];
+            this.books.forEach((book) => {
+                newBooks.push(this.changeToNewBook(book));
+            });
+            this.newBookList = newBooks;
         }
+    },
+    created() {
+        this.getNewBooks();
     }
 }
 </script>
@@ -22,14 +51,14 @@ export default {
 <template>
     <!-- name, price, quantity, publication_year, author -->
     <ul class="list-group">
-        <li class="list-group-item list-group-item-dark" v-for="(book, index) in books" :key="index"
+        <li class="list-group-item list-group-item-dark" v-for="(book, index) in newBookList" :key="index"
             :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-            {{ book.name }}
+            {{ book.name.value }}
             <div v-if="index === activeIndex">
-                <BookCard :book="book"></BookCard>
+                <Card :Infor="book" :title="'Thông tin về sách'"></Card>
                 <router-link :to="{
                     name: 'book.edit',
-                    params: { id: book._id },
+                    params: { id: book._id.value },
                 }">
                     <button class="btn btn-warning">Hiệu chỉnh</button>
                 </router-link>
