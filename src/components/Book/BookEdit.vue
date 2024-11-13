@@ -42,7 +42,6 @@ export default {
             }
         },
         async updateBook(data) {
-            console.log("Gọi đến updateBook!")
             try {
                 await bookService.update(this.book._id, data);
                 alert('Sách được cập nhật thành công.');

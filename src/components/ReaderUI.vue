@@ -9,13 +9,18 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <router-link :to="{}" class="nav-link">
+                        <router-link :to="{ name: 'readerHome' }" class="nav-link">
                             Trang chủ
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{}" class="nav-link">
+                        <router-link :to="{ name: 'borrowingBook' }" class="nav-link">
                             Sách đang mượn
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{ name: 'readerAccount' }" class="nav-link">
+                            Trang cá nhân
                         </router-link>
                     </li>
                 </ul>
@@ -23,20 +28,15 @@
         </div>
     </nav>
     <router-view></router-view>
-    <MyAccount :myInfor="accountInfor"></MyAccount>
 </template>
 <script>
 import readerService from '@/services/reader.service';
-import MyAccount from './MyAccount.vue';
 
 export default {
     data() {
         return {
             accountInfor: {},
         }
-    },
-    components: {
-        MyAccount,
     },
     methods: {
         async getAccountInfor() {

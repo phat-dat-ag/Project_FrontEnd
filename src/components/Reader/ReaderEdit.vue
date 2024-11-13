@@ -42,7 +42,6 @@ export default {
             }
         },
         async updateReader(data) {
-            console.log("Gọi đến updateReader!")
             try {
                 await readerService.update(this.reader._id, data);
                 alert('Độc giả được cập nhật thành công.');

@@ -5,38 +5,81 @@ import Book from "@/views/Book.vue";
 import Publisher from "@/views/Publisher.vue";
 import Staff from "@/views/Staff.vue";
 import Transaction from "@/views/Transaction.vue";
-import LoginUser from "@/components/LoginUser.vue";
-import LoginAdmin from "@/components/LoginAdmin.vue";
-import InterfaceAdmin from "@/components/InterfaceAdmin.vue";
-import InterfaceReader from "@/components/InterfaceReader.vue";
-import InterfaceStaff from "@/components/InterfaceStaff.vue";
+import UserLogin from "@/components/UserLogin.vue";
+import AdminLogin from "@/components/AdminLogin.vue";
+import AdminUI from "@/components/AdminUI.vue";
+import ReaderUI from "@/components/ReaderUI.vue";
+import StaffUI from "@/components/StaffUI.vue";
 import NotFound from "@/views/NotFound.vue";
+import StaffTracking from "@/components/StaffTracking.vue"
+import ReaderBorrowing from "@/components/ReaderBorrowing.vue";
+import StaffAccount from "@/components/StaffAccount.vue";
+import ReaderAccount from "@/components/ReaderAccount.vue";
 
 const routes = [
+    // User- Login
     {
         path: "/",
         name: "loginUser",
-        component: LoginUser,
+        component: UserLogin,
     },
+    // User- Reader
     {
         path: "/user/reader",
         name: "interfaceReader",
-        component: InterfaceReader,
+        component: ReaderUI,
+        children: [
+            {
+                path: "home",
+                name: "readerHome",
+                component: Home,
+            },
+            {
+                path: "borrowing",
+                name: "borrowingBook",
+                component: ReaderBorrowing,
+            },
+            {
+                path: "account",
+                name: "readerAccount",
+                component: ReaderAccount,
+            }
+
+        ]
     },
+    // User- Staff
     {
         path: "/user/staff",
         name: "interfaceStaff",
-        component: InterfaceStaff,
+        component: StaffUI,
+        children: [
+            {
+                path: "home",
+                name: "staffHome",
+                component: Home,
+            },
+            {
+                path: "tracking",
+                name: "trackingBook",
+                component: StaffTracking,
+            },
+            {
+                path: "account",
+                name: "staffAccount",
+                component: StaffAccount,
+            }
+        ]
     },
+    // Admin
     {
         path: "/loginAdmin",
         name: "loginAdmin",
-        component: LoginAdmin,
+        component: AdminLogin,
     },
     {
         path: "/admin",
         name: "interfaceAdmin",
-        component: InterfaceAdmin,
+        component: AdminUI,
         children: [
             {
                 path: "",

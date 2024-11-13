@@ -43,7 +43,6 @@ export default {
             }
         },
         async updateStaff(data) {
-            console.log("Gọi đến updateStaff!")
             try {
                 await staffService.update(this.staff._id, data);
                 alert('Nhân viên được cập nhật thành công.');

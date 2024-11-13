@@ -43,7 +43,6 @@ export default {
             }
         },
         async updateTransaction(data) {
-            console.log("Gọi đến updateTransaction!")
             try {
                 await transactionService.update(this.transaction._id, data);
                 alert('Theo dõi mượn sách được cập nhật thành công.');

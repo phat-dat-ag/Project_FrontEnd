@@ -42,7 +42,6 @@ export default {
             }
         },
         async updatePublisher(data) {
-            console.log("Gọi đến updatePublisher!")
             try {
                 await publisherService.update(this.publisher._id, data);
                 alert('Nhà xuất bản được cập nhật thành công.');
