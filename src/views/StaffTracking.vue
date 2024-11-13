@@ -14,7 +14,7 @@ import bookService from '@/services/book.service';
 import readerService from '@/services/reader.service';
 import staffService from '@/services/staff.service';
 import transactionService from '@/services/transaction.service';
-import Card from './Card.vue';
+import Card from '../components/Card.vue';
 
 export default {
     components: {

@@ -1,20 +1,20 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "@/views/Home.vue";
-import Reader from "@/views/Reader.vue";
-import Book from "@/views/Book.vue";
-import Publisher from "@/views/Publisher.vue";
-import Staff from "@/views/Staff.vue";
-import Transaction from "@/views/Transaction.vue";
-import UserLogin from "@/components/UserLogin.vue";
-import AdminLogin from "@/components/AdminLogin.vue";
-import AdminUI from "@/components/AdminUI.vue";
-import ReaderUI from "@/components/ReaderUI.vue";
-import StaffUI from "@/components/StaffUI.vue";
+import AdminHome from "@/views/AdminHome.vue";
+import AdminReader from "@/views/AdminReader.vue";
+import AdminBook from "@/views/AdminBook.vue";
+import AdminPublisher from "@/views/AdminPublisher.vue";
+import AdminStaff from "@/views/AdminStaff.vue";
+import AdminTransaction from "@/views/AdminTransaction.vue";
+import UserLogin from "@/views/UserLogin.vue";
+import AdminLogin from "@/views/AdminLogin.vue";
+import AdminUI from "@/views/AdminUI.vue";
+import ReaderUI from "@/views/ReaderUI.vue";
+import StaffUI from "@/views/StaffUI.vue";
 import NotFound from "@/views/NotFound.vue";
-import StaffTracking from "@/components/StaffTracking.vue"
-import ReaderBorrowing from "@/components/ReaderBorrowing.vue";
-import StaffAccount from "@/components/StaffAccount.vue";
-import ReaderAccount from "@/components/ReaderAccount.vue";
+import StaffTracking from "@/views/StaffTracking.vue"
+import ReaderBorrowing from "@/views/ReaderBorrowing.vue";
+import StaffAccount from "@/views/StaffAccount.vue";
+import ReaderAccount from "@/views/ReaderAccount.vue";
 
 const routes = [
     // User- Login
@@ -32,7 +32,7 @@ const routes = [
             {
                 path: "home",
                 name: "readerHome",
-                component: Home,
+                component: AdminHome,
             },
             {
                 path: "borrowing",
@@ -56,7 +56,7 @@ const routes = [
             {
                 path: "home",
                 name: "staffHome",
-                component: Home,
+                component: AdminHome,
             },
             {
                 path: "tracking",
@@ -84,12 +84,12 @@ const routes = [
             {
                 path: "",
                 name: "home",
-                component: Home,
+                component: AdminHome,
             },
             {
                 path: "reader",
                 name: "reader",
-                component: Reader,
+                component: AdminReader,
                 children: [
                     {
                         path: "edit:id",
@@ -108,7 +108,7 @@ const routes = [
             {
                 path: "book",
                 name: "book",
-                component: Book,
+                component: AdminBook,
                 children: [
                     {
                         path: "edit:id",
@@ -128,7 +128,7 @@ const routes = [
             {
                 path: "publisher",
                 name: "publisher",
-                component: Publisher,
+                component: AdminPublisher,
                 children: [
                     {
                         path: "publisher:id",
@@ -147,7 +147,7 @@ const routes = [
             {
                 path: "staff",
                 name: "staff",
-                component: Staff,
+                component: AdminStaff,
                 children: [
                     {
                         path: "staff:id",
@@ -166,7 +166,7 @@ const routes = [
             {
                 path: "transaction",
                 name: "transaction",
-                component: Transaction,
+                component: AdminTransaction,
                 children: [
                     {
                         path: "edit:id",
