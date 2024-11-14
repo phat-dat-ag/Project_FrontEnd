@@ -15,7 +15,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link :to="{ name: 'trackingBook' }" class="nav-link">
-                            Sách đang quản lý
+                            Lịch sử quản lý
                         </router-link>
                     </li>
                     <li class="nav-item">

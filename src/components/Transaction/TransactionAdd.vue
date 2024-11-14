@@ -2,7 +2,7 @@
     <div>
         <h4>Thêm Chi tiết mượn sách</h4>
         <!-- Dù addTransaction nhận tham số, nhưng nó là từ sự kiện emit mà -->
-        <TransactionForm :transaction="transaction" @submit:transaction="addTransaction" />
+        <TransactionForm :transaction="transaction" :isAdded="true" @submit:transaction="addTransaction" />
         <p>{{ message }}</p>
     </div>
 </template>

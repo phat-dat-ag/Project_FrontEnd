@@ -15,7 +15,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link :to="{ name: 'borrowingBook' }" class="nav-link">
-                            Sách đang mượn
+                            Lịch sử mượn sách
                         </router-link>
                     </li>
                     <li class="nav-item">

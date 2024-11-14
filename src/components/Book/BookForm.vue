@@ -63,7 +63,8 @@ export default {
     },
     emits: ["submit:book", "delete:book"],
     props: {
-        book: { type: Object, required: true }
+        book: { type: Object, required: true },
+        isAdded: { type: Boolean, required: true },
     },
     data() {
         const bookFormSchema = yup.object().shape({
@@ -113,7 +114,9 @@ export default {
     methods: {
         // Lưu: dùng cho cả Add và Edit
         async submitBook() {
-            if (!this.selectedFile) {
+            // Thêm thì phải tải ảnh sách
+            // Chỉnh sửa có thể không cần tải ảnh sách
+            if (!this.selectedFile && this.isAdded) {
                 alert("Phải chọn ảnh sách!");
                 return;
             }
@@ -141,7 +144,7 @@ export default {
                 try {
                     const respone = await bookService.uploadBookImage(this.selectedFile);
                     this.bookLocal.img = respone.imageUrl;
-                    console.log(respone);
+                    // console.log(respone);
                 } catch (error) {
                     console.error("Error uploading image:", error);
                 }

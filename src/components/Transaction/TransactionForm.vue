@@ -4,25 +4,25 @@
         <!-- book_id, reader_id, staff_id, borrow_date, return_date -->
         <div class="form-group">
             <label for="book_id">Sách</label>
-            <select name="book_id" class="form-control" v-model="transactionLocal.book_id">
+            <Field as="select" name="book_id" class="form-control" v-model="transactionLocal.book_id">
                 <option v-for="(book, index) in books" :key="index" :value="book._id">{{ book.name }}</option>
-            </select>
+            </Field>
             <ErrorMessage name="book_id" class="error-feedback" />
         </div>
         <div class="form-group">
             <label for="reader_id">Độc giả</label>
-            <select name="reader_id" class="form-control" v-model="transactionLocal.reader_id">
+            <Field as="select" name="reader_id" class="form-control" v-model="transactionLocal.reader_id">
                 <option v-for="(reader, index) in readers" :key="index" :value="reader._id">
                     {{ reader.first_name }} {{ reader.last_name }}
                 </option>
-            </select>
+            </Field>
             <ErrorMessage name="reader_id" class="error-feedback" />
         </div>
         <div class="form-group">
             <label for="staff_id">Nhân viên</label>
-            <select name="staff_id" class="form-control" v-model="transactionLocal.staff_id">
+            <Field as="select" name="staff_id" class="form-control" v-model="transactionLocal.staff_id">
                 <option v-for="(staff, index) in staffs" :key="index" :value="staff._id">{{ staff.fullname }}</option>
-            </select>
+            </Field>
             <ErrorMessage name="staff_id" class="error-feedback" />
         </div>
         <div class="form-group">
@@ -30,7 +30,7 @@
             <Field name="borrow_date" type="date" class="form-control" v-model="transactionLocal.borrow_date" />
             <ErrorMessage name="borrow_date" class="error-feedback" />
         </div>
-        <div class="form-group">
+        <div v-if="!isAdded" class="form-group">
             <label for="return_date">Ngày trả</label>
             <Field name="return_date" type="date" class="form-control" v-model="transactionLocal.return_date" />
             <ErrorMessage name="return_date" class="error-feedback" />
@@ -52,7 +52,7 @@
             </div>
         </div>
     </Form>
-    <p v-else>Đang thiếu Độc giả hoặc Sách hoặc Nhân viên nên không thể lập biên nhận Mượn sách</p>
+    <p v-else>Đang thiếu Độc giả/ Sách/ Nhân viên nên không thể lập biên nhận mượn sách</p>
 </template>
 
 <script>
@@ -69,16 +69,29 @@ export default {
     },
     emits: ["submit:transaction", "delete:transaction"],
     props: {
+        isAdded: { type: Boolean, required: true },
         transaction: { type: Object, required: true }
     },
     data() {
         const transactionFormSchema = yup.object().shape({
-            // book_id: yup.string().required("Mã sách là bắt buộc."),
-            // reader_id: yup.string().required("Mã độc giả là bắt buộc."),
-            // staff_id: yup.string().required("Mã nhân viên là bắt buộc."),
-
+            book_id: yup.string().required("Phải chọn sách."),
+            reader_id: yup.string().required("Phải chọn độc giả."),
+            staff_id: yup.string().required("Phải chọn nhân viên."),
+            // Phải có ngày mượn
             borrow_date: yup.date().required("Ngày mượn là bắt buộc."),
-            return_date: yup.date().nullable(),
+            // Không bắt buộc ngày trả
+            // Nhưng nếu có ngày trả thì phải hợp lý: ngày trả >= ngày mượn
+            return_date: yup
+                .date()
+                // value là return_date được truyền tự động vào
+                .test("is-return-date-after-borrow-date", "Ngày trả phải sau ngày mượn", function (value) {
+                    // Không có ngày trả => bỏ qua
+                    if (!value)
+                        return true;
+                    // Truy cập giá trị borrow_date từ cùng object form
+                    const { borrow_date } = this.parent;
+                    return borrow_date && value && new Date(value) >= new Date(borrow_date);
+                }),
         });
         return {
             // Không hiệu chỉnh props, nên tạo biến cục bộ transactionLocal để liên kết với các input trên form
@@ -103,20 +116,27 @@ export default {
         // Lấy độc giả
         async getReaders() {
             this.readers = await readerService.getAll();
-            // console.log(this.readers);
         },
         // Lấy sách
         async getBooks() {
             this.books = await bookService.getAll();
-            // console.log(this.books);
         },
         // Lấy nhân viên
         async getStaffs() {
             this.staffs = await staffService.getAll();
-            // console.log(this.staffs);
         },
         // Lưu: dùng cho cả Add và Edit
         submitTransaction() {
+            if (!this.transactionLocal.return_date)
+                this.transactionLocal = {
+                    ...this.transactionLocal,
+                    status: "Đang mượn",
+                }
+            else
+                this.transactionLocal = {
+                    ...this.transactionLocal,
+                    status: "Đã trả",
+                }
             this.$emit("submit:transaction", this.transactionLocal);
         },
         // Xóa: dùng cho Edit

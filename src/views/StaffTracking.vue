@@ -1,6 +1,6 @@
 <template>
-    <h1>Sách đang quản lý</h1>
-    <div class="container">
+    <div v-if="myTransactionList.length > 0" class="container">
+        <h1>Lịch sử quản lý</h1>
         <div class="row justify-content-center">
             <div class="d-flex justify-content-center col-12 col-sm-6 col-md-4 mb-2"
                 v-if="this.myTransactionList.length > 0" v-for="(transaction) in myTransactionList">
@@ -8,6 +8,7 @@
             </div>
         </div>
     </div>
+    <h3 v-else>Lịch sử quản lý trống</h3>
 </template>
 <script>
 import bookService from '@/services/book.service';
@@ -28,6 +29,7 @@ export default {
     methods: {
         async getTransactionInfor(transaction) {
             let newInfor = {
+                status: { label: "Trạng thái" },
                 book_name: { label: "Sách", },
                 reader_name: { label: "Độc giả", },
                 borrow_date: { label: "Ngày mượn" },

@@ -32,6 +32,7 @@ export default {
                 staff_name: { label: "Nhân viên", },
                 borrow_date: { label: "Ngày mượn", },
                 return_date: { label: "Ngày trả", },
+                status: { label: "Trạng thái" }
             };
             for (let key in newInfor) {
                 newInfor[key] = { ...newInfor[key], value: transaction[key] };
@@ -72,7 +73,8 @@ export default {
     <ul class="list-group">
         <li class="list-group-item list-group-item-dark" v-for="(transaction, index) in newTransactionList" :key="index"
             :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-            {{ transaction.book_name.value }} / {{ transaction.reader_name.value }}
+            {{ transaction.status.value }}
+            : {{ transaction.book_name.value }} / {{ transaction.reader_name.value }}
             <div v-if="index === activeIndex">
                 <Card :Infor="transaction" :title="'Thông tin về giao dịch'"></Card>
                 <router-link :to="{

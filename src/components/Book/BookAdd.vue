@@ -2,7 +2,7 @@
     <div>
         <h4>Thêm Sách</h4>
         <!-- Dù addBook nhận tham số, nhưng nó là từ sự kiện emit mà -->
-        <BookForm :book="book" @submit:book="addBook" />
+        <BookForm :book="book" :isAdded="true" @submit:book="addBook" />
         <p>{{ message }}</p>
     </div>
 </template>

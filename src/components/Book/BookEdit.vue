@@ -2,7 +2,7 @@
     <div v-if="book">
         <h4>Hiệu chỉnh Sách</h4>
         <!-- Dù updateBook nhận tham số, nhưng nó là từ sự kiện emit mà, deleteBook cũng vậy -->
-        <BookForm :book="book" @submit:book="updateBook" @delete:book="deleteBook" />
+        <BookForm :book="book" :isAdded="false" @submit:book="updateBook" @delete:book="deleteBook" />
         <p>{{ message }}</p>
     </div>
 </template>

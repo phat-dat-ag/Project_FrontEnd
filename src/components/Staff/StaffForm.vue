@@ -21,9 +21,9 @@
         <!-- Lấy từ danh sách đã tạo sẵn -->
         <div class="form-group">
             <label for="title">Chức vụ</label>
-            <select name="title" class="form-control" v-model="staffLocal.title">
+            <Field as="select" name="title" class="form-control" v-model="staffLocal.title">
                 <option v-for="(titl, index) in titles" :key="index" :value="titl">{{ titl }}</option>
-            </select>
+            </Field>
             <ErrorMessage name="title" class="error-feedback" />
         </div>
         <div class="form-group">
@@ -75,6 +75,9 @@ export default {
                 .min(2, "Họ phải ít nhất 2 ký tự.")
                 .max(50, "Họ và tên có nhiều nhất 50 ký tự."),
             address: yup.string().required("Địa chỉ là bắt buộc.").max(100, "Địa chỉ tối đa 100 ký tự."),
+            title: yup
+                .string()
+                .required("Chức vụ là bắt buộc.")
         };
         // Chỉ xác thực khi Thêm, vì không cho Admin cập nhật username và password
         if (this.isAdded) {

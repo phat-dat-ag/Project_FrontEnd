@@ -28,6 +28,8 @@ const routes = [
         path: "/user/reader",
         name: "interfaceReader",
         component: ReaderUI,
+        // Hiển thị thêm trang chủ khi vừa truy cập
+        redirect: { name: "readerHome" },
         children: [
             {
                 path: "home",
@@ -52,6 +54,8 @@ const routes = [
         path: "/user/staff",
         name: "interfaceStaff",
         component: StaffUI,
+        // Hiển thị thêm trang chủ khi vừa truy cập
+        redirect: { name: "staffHome" },
         children: [
             {
                 path: "home",
@@ -80,6 +84,8 @@ const routes = [
         path: "/admin",
         name: "interfaceAdmin",
         component: AdminUI,
+        // Hiển thị thêm trang chủ khi vừa truy cập
+        redirect: { name: "home" },
         children: [
             {
                 path: "",
