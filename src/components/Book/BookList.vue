@@ -1,4 +1,5 @@
 <script>
+import publisherService from '@/services/publisher.service';
 import Card from '../Card.vue';
 export default {
     components: {
@@ -27,6 +28,7 @@ export default {
                 author: { label: "Tác giả" },
                 price: { label: "Giá sách" },
                 quantity: { label: "Số lượng" },
+                publisher_name: { label: "Nhà xuất bản" },
                 publication_year: { label: "Năm xuất bản" },
             };
             for (let key in newInfor) {
@@ -34,11 +36,16 @@ export default {
             }
             return newInfor;
         },
-        getNewBooks() {
+        async getNewBooks() {
             let newBooks = [];
-            this.books.forEach((book) => {
-                newBooks.push(this.changeToNewBook(book));
-            });
+            for (let book of this.books) {
+                const publisher = await publisherService.get(book.publisher_id);
+                const tempBook = {
+                    ...book,
+                    publisher_name: publisher.name,
+                }
+                newBooks.push(this.changeToNewBook(tempBook));
+            }
             this.newBookList = newBooks;
         }
     },

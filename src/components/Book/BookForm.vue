@@ -23,6 +23,15 @@
             <ErrorMessage name="quantity" class="error-feedback" />
         </div>
         <div class="form-group">
+            <label for="publisher_id">Nhà xuất bản</label>
+            <Field as="select" name="publisher_id" class="form-control" v-model="bookLocal.publisher_id">
+                <option v-for="(publisher, index) in publishers" :key="index" :value="publisher._id">
+                    {{ publisher.name }}
+                </option>
+            </Field>
+            <ErrorMessage name="publisher_id" class="error-feedback" />
+        </div>
+        <div class="form-group">
             <label for="publication_year">Năm xuất bản</label>
             <Field name="publication_year" type="number" class="form-control" v-model="bookLocal.publication_year" />
             <ErrorMessage name="publication_year" class="error-feedback" />
@@ -55,6 +64,7 @@
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import bookService from "@/services/book.service";
+import publisherService from "@/services/publisher.service";
 export default {
     components: {
         Form,
@@ -83,6 +93,9 @@ export default {
                 .required("Số lượng sách là bắt buộc.")
                 .min(1, "Số lượng sách ít nhất là 1.")
                 .max(1000, "Số lượng sách tối đa là 1000."),
+            publisher_id: yup
+                .string()
+                .required("Phải chọn Nhà xuất bản"),
             publication_year: yup
                 .number()
                 .required("Năm xuất bản là bắt buộc.")
@@ -99,6 +112,7 @@ export default {
             bookLocal: this.book,
             bookFormSchema,
             selectedFile: null,
+            publishers: [],
         };
     },
     // Thêm cái này để theo dõi, mỗi khi book thay đổi thì thay đổi thông tin trong Form
@@ -150,7 +164,13 @@ export default {
                 }
             }
         },
+        async getPublishers() {
+            this.publishers = await publisherService.getAll();
+        }
     },
+    created() {
+        this.getPublishers();
+    }
 };
 </script>
 
