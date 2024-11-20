@@ -1,4 +1,5 @@
 <script>
+import { jwtDecode } from "jwt-decode";
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import readerService from "@/services/reader.service";
@@ -66,26 +67,32 @@ export default {
         async checkPreLogin() {
             const token = localStorage.getItem("token");
             if (token) {
-                let account = await adminService.getProfile(token);
-                // Nếu không phải admin
-                if (!account) {
-                    account = await readerService.getProfile(token);
-                    // Nếu không phải là reader
+                const decodedToken = jwtDecode(token);
+                const currentTime = Date.now() / 1000;
+                if (decodedToken.exp < currentTime) {
+                    localStorage.removeItem("token");
+                } else {
+                    let account = await adminService.getProfile(token);
+                    // Nếu không phải admin
                     if (!account) {
-                        account = await staffService.getProfile(token);
-                        // Nếu không phải là staff thì thôi => Trước đó đã đăng xuất tài khoản hết rồi
+                        account = await readerService.getProfile(token);
+                        // Nếu không phải là reader
                         if (!account) {
+                            account = await staffService.getProfile(token);
+                            // Nếu không phải là staff thì thôi => Trước đó đã đăng xuất tài khoản hết rồi
+                            if (!account) {
+                            } else {
+                                // Là staff
+                                this.$router.push({ name: "interfaceStaff" });
+                            }
                         } else {
-                            // Là staff
-                            this.$router.push({ name: "interfaceStaff" });
+                            // Là reader
+                            this.$router.push({ name: "interfaceReader" });
                         }
                     } else {
-                        // Là reader
-                        this.$router.push({ name: "interfaceReader" });
+                        // Là admin
+                        this.$router.push({ name: "interfaceAdmin" });
                     }
-                } else {
-                    // Là admin
-                    this.$router.push({ name: "interfaceAdmin" });
                 }
             }
         },
