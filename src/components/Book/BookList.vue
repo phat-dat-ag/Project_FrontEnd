@@ -1,6 +1,8 @@
 <script>
 import publisherService from '@/services/publisher.service';
 import Card from '../Card.vue';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { BOOK_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         Card
@@ -47,6 +49,10 @@ export default {
                 newBooks.push(this.changeToNewBook(tempBook));
             }
             this.newBookList = newBooks;
+        },
+        handleClickUpdateButton() {
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(BOOK_TYPE);
         }
     },
     // Danh sách hiển thị cần thay đổi thì cập nhật
@@ -72,10 +78,10 @@ export default {
             <div v-if="index === activeIndex">
                 <Card :Infor="book" :title="'Thông tin về sách'"></Card>
                 <router-link :to="{
-                    name: 'book.edit',
+                    name: 'entity.edit',
                     params: { id: book._id.value },
                 }">
-                    <button class="btn btn-warning">Hiệu chỉnh</button>
+                    <button class="btn btn-warning" @click="handleClickUpdateButton">Hiệu chỉnh</button>
                 </router-link>
             </div>
         </li>

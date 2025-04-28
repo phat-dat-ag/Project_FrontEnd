@@ -1,5 +1,7 @@
 <script>
 import Card from '../Card.vue';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { PUBLISHER_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         Card
@@ -37,6 +39,10 @@ export default {
                 newsPublisher.push(this.changeToNewPublisher(publisher));
             });
             this.newPublisherList = newsPublisher;
+        },
+        handleClickUpdateButton() {
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(PUBLISHER_TYPE);
         }
     },
     // Danh sách hiển thị cần thay đổi thì cập nhật
@@ -61,10 +67,10 @@ export default {
             <div v-if="index === activeIndex">
                 <Card :Infor="publisher" :title="'Thông tin về NXB'"></Card>
                 <router-link :to="{
-                    name: 'publisher.edit',
+                    name: 'entity.edit',
                     params: { id: publisher._id.value },
                 }">
-                    <button class="btn btn-warning">Hiệu chỉnh</button>
+                    <button class="btn btn-warning" @click="handleClickUpdateButton">Hiệu chỉnh</button>
                 </router-link>
             </div>
         </li>

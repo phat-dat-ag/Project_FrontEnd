@@ -4,6 +4,8 @@ import bookService from '@/services/book.service';
 import readerService from '@/services/reader.service';
 import staffService from '@/services/staff.service';
 import Card from '../Card.vue';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { TRANSACTION_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         Card,
@@ -54,6 +56,10 @@ export default {
                 let newTransaction = this.changeToNewTransaction(updatedTransaction);
                 this.newTransactionList.push(newTransaction);
             }
+        },
+        handleClickUpdateButton() {
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(TRANSACTION_TYPE);
         }
     },
     // transactions thay đổi thì cập nhật lại
@@ -78,10 +84,10 @@ export default {
             <div v-if="index === activeIndex">
                 <Card :Infor="transaction" :title="'Thông tin về giao dịch'"></Card>
                 <router-link :to="{
-                    name: 'transaction.edit',
+                    name: 'entity.edit',
                     params: { id: transaction._id.value },
                 }">
-                    <button class="btn btn-warning">Hiệu chỉnh</button>
+                    <button class="btn btn-warning" @click="handleClickUpdateButton">Hiệu chỉnh</button>
                 </router-link>
             </div>
         </li>

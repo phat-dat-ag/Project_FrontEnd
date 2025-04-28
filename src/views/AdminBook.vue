@@ -2,6 +2,8 @@
 import InputSearch from '@/components/InputSearch.vue';
 import BookList from '@/components/Book/BookList.vue';
 import bookService from '@/services/book.service';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { BOOK_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         InputSearch, BookList,
@@ -71,7 +73,9 @@ export default {
         },
         // Chức năng thêm mới
         goToAddBook() {
-            this.$router.push({ name: "book.add" });
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(BOOK_TYPE);
+            this.$router.push({ name: "entity.add" });
         }
     },
     mounted() {
@@ -114,9 +118,7 @@ export default {
 
                 <!-- BookAdd và BookEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
-                    <!-- Truyền xuống cho BookAdd và BookEdit -->
-                    <!-- Nơi xuất hiện của BookAdd và BookEdit -->
-                    <router-view :refreshBookList="refreshBookList"></router-view>
+
                 </div>
             </div>
         </div>

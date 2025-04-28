@@ -2,6 +2,8 @@
 import InputSearch from '@/components/InputSearch.vue';
 import StaffList from '@/components/Staff/StaffList.vue';
 import staffService from '@/services/staff.service';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { STAFF_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         InputSearch, StaffList,
@@ -71,7 +73,9 @@ export default {
         },
         // Chức năng thêm mới
         goToAddStaff() {
-            this.$router.push({ name: "staff.add" });
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(STAFF_TYPE);
+            this.$router.push({ name: "entity.add" });
         }
     },
     mounted() {
@@ -115,9 +119,7 @@ export default {
 
                 <!-- StaffCard và StaffEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
-                    <!-- Truyền xuống cho StaffAdd và StaffEdit -->
-                    <!-- Nơi xuất hiện của StaffAdd và StaffEdit -->
-                    <router-view :refreshStaffList="refreshStaffList"></router-view>
+
                 </div>
             </div>
         </div>

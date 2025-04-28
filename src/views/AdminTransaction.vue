@@ -2,6 +2,8 @@
 import InputSearch from '@/components/InputSearch.vue';
 import TransactionList from '@/components/Transaction/TransactionList.vue';
 import transactionService from '@/services/transaction.service';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { TRANSACTION_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         InputSearch, TransactionList,
@@ -71,7 +73,9 @@ export default {
         },
         // Chức năng thêm mới
         goToAddTransaction() {
-            this.$router.push({ name: "transaction.add" });
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(TRANSACTION_TYPE);
+            this.$router.push({ name: "entity.add" });
         }
     },
     mounted() {
@@ -120,9 +124,7 @@ export default {
 
                 <!-- TransactionAdd và TransactionEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
-                    <!-- Truyền xuống cho TransactionAdd và TransactionEdit -->
-                    <!-- Nơi xuất hiện của TransactionAdd và TransactionEdit -->
-                    <router-view :refreshTransactionList="refreshTransactionList"></router-view>
+
                 </div>
             </div>
         </div>

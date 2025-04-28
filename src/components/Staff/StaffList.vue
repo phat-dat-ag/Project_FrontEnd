@@ -1,5 +1,7 @@
 <script>
 import Card from '../Card.vue';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { STAFF_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         Card
@@ -39,6 +41,10 @@ export default {
                 newStaff.push(this.changeToNewStaff(staff));
             });
             this.newStaffList = newStaff;
+        },
+        handleClickUpdateButton() {
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(STAFF_TYPE);
         }
     },
     // Danh sách hiển thị cần thay đổi thì cập nhật
@@ -63,10 +69,10 @@ export default {
             <div v-if="index === activeIndex">
                 <Card :Infor="staff" :title="'Thông tin về nhân viên'"></Card>
                 <router-link :to="{
-                    name: 'staff.edit',
+                    name: 'entity.edit',
                     params: { id: staff._id.value },
                 }">
-                    <button class="btn btn-warning">Hiệu chỉnh</button>
+                    <button class="btn btn-warning" @click="handleClickUpdateButton">Hiệu chỉnh</button>
                 </router-link>
             </div>
         </li>

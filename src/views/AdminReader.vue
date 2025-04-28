@@ -2,6 +2,8 @@
 import InputSearch from '@/components/InputSearch.vue';
 import ReaderList from '@/components/Reader/ReaderList.vue';
 import readerService from '@/services/reader.service';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { READER_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         InputSearch, ReaderList,
@@ -71,7 +73,9 @@ export default {
         },
         // Chức năng thêm mới
         goToAddReader() {
-            this.$router.push({ name: "reader.add" });
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(READER_TYPE);
+            this.$router.push({ name: "entity.add" });
         }
     },
     mounted() {
@@ -116,9 +120,7 @@ export default {
 
                 <!-- ReaderAdd và ReaderEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
-                    <!-- Truyền xuống cho ReaderAdd và ReaderEdit -->
-                    <!-- Nơi xuất hiện của ReaderAdd và ReaderEdit -->
-                    <router-view :refreshReaderList="refreshReaderList"></router-view>
+
                 </div>
             </div>
         </div>

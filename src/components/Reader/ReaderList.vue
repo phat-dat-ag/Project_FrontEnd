@@ -1,5 +1,7 @@
 <script>
 import Card from '../Card.vue';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { READER_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         Card,
@@ -42,6 +44,10 @@ export default {
                 newReaders.push(this.changeToNewReader(reader));
             });
             this.newReaderList = newReaders;
+        },
+        handleClickUpdateButton() {
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(READER_TYPE);
         }
     },
     // Danh sách hiển thị cần thay đổi thì cập nhật
@@ -65,10 +71,10 @@ export default {
             <div v-if="index === activeIndex">
                 <Card :Infor="reader" :title="'Thông tin về độc giả'"></Card>
                 <router-link :to="{
-                    name: 'reader.edit',
+                    name: 'entity.edit',
                     params: { id: reader._id.value },
                 }">
-                    <button class="btn btn-warning">Hiệu chỉnh</button>
+                    <button class="btn btn-warning" @click="handleClickUpdateButton">Hiệu chỉnh</button>
                 </router-link>
             </div>
         </li>

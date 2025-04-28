@@ -2,7 +2,8 @@
 import InputSearch from '@/components/InputSearch.vue';
 import PublisherList from '@/components/Publisher/PublisherList.vue';
 import publisherService from '@/services/publisher.service';
-
+import { useFormTypeStore } from '@/stores/formtype.stores';
+import { PUBLISHER_TYPE } from '@/constants/form.constants';
 export default {
     components: {
         InputSearch, PublisherList,
@@ -72,7 +73,9 @@ export default {
         },
         // Chức năng thêm mới
         goToAddPublisher() {
-            this.$router.push({ name: "publisher.add" });
+            const formTypeStore = useFormTypeStore();
+            formTypeStore.setFormType(PUBLISHER_TYPE);
+            this.$router.push({ name: "entity.add" });
         }
     },
     mounted() {
@@ -116,9 +119,7 @@ export default {
 
                 <!-- PublisherAdd và PublisherEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
-                    <!-- Truyền xuống cho PublisherAdd và PublisherEdit -->
-                    <!-- Nơi xuất hiện của PublisherAdd và PublisherEdit -->
-                    <router-view :refreshPublisherList="refreshPublisherList"></router-view>
+
                 </div>
             </div>
         </div>
