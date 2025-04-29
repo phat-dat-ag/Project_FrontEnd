@@ -1,18 +1,19 @@
 <script>
 import InputSearch from '@/components/InputSearch.vue';
-import TransactionList from '@/components/Transaction/TransactionList.vue';
 import transactionService from '@/services/transaction.service';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { TRANSACTION_TYPE } from '@/constants/form.constants';
+import ListEntity from '@/entities/ListEntity.vue';
 export default {
     components: {
-        InputSearch, TransactionList,
+        InputSearch, ListEntity
     },
     data() {
         return {
             transactions: [],
             searchText: "",
             activeIndex: -1,
+            TRANSACTION_TYPE,
         }
     },
     watch: {
@@ -82,7 +83,6 @@ export default {
         // Khi vừa mount là refresh, => lấy dữ liệu từ CSDL
         this.refreshTransactionList();
     }
-
 }
 </script>
 <template>
@@ -117,9 +117,9 @@ export default {
                     </div>
 
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
-                    <TransactionList v-if="filteredTransactionsCount > 0" :transactions="filteredTransactions"
-                        v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có Lịch sử mượn sách nào.</p>
+                    <ListEntity v-if="filteredTransactionsCount > 0" :entities="filteredTransactions"
+                        v-model:activeIndex="activeIndex" :interfaceType="TRANSACTION_TYPE"></ListEntity>
+                    <p v-else>Không có Giao dịch mượn sách nào!</p>
                 </div>
 
                 <!-- TransactionAdd và TransactionEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

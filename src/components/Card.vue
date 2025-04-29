@@ -10,9 +10,9 @@ export default {
         }
     },
     methods: {
-        // Loại bỏ ID
+        // Không hiển thị _id và title
         getNewInfor() {
-            const { _id, ...newIn } = this.Infor;
+            const { _id, title, ...newIn } = this.Infor;
             this.newInfor = newIn;
         }
     },

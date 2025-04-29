@@ -1,18 +1,19 @@
 <script>
 import InputSearch from '@/components/InputSearch.vue';
-import PublisherList from '@/components/Publisher/PublisherList.vue';
 import publisherService from '@/services/publisher.service';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { PUBLISHER_TYPE } from '@/constants/form.constants';
+import ListEntity from '@/entities/ListEntity.vue';
 export default {
     components: {
-        InputSearch, PublisherList,
+        InputSearch, ListEntity
     },
     data() {
         return {
             publishers: [],
             searchText: "",
             activeIndex: -1,
+            PUBLISHER_TYPE,
         }
     },
     watch: {
@@ -112,9 +113,9 @@ export default {
                     </div>
 
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
-                    <PublisherList v-if="filteredPublishersCount > 0" :publishers="filteredPublishers"
-                        v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có Nhà xuất bản nào.</p>
+                    <ListEntity v-if="filteredPublishersCount > 0" :entities="filteredPublishers"
+                        v-model:activeIndex="activeIndex" :interfaceType="PUBLISHER_TYPE"></ListEntity>
+                    <p v-else>Không có Nhà xuất bản nào!</p>
                 </div>
 
                 <!-- PublisherAdd và PublisherEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

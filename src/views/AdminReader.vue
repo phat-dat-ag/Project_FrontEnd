@@ -1,18 +1,19 @@
 <script>
 import InputSearch from '@/components/InputSearch.vue';
-import ReaderList from '@/components/Reader/ReaderList.vue';
 import readerService from '@/services/reader.service';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { READER_TYPE } from '@/constants/form.constants';
+import ListEntity from '@/entities/ListEntity.vue';
 export default {
     components: {
-        InputSearch, ReaderList,
+        InputSearch, ListEntity
     },
     data() {
         return {
             readers: [],
             searchText: "",
             activeIndex: -1,
+            READER_TYPE,
         }
     },
     watch: {
@@ -82,7 +83,6 @@ export default {
         // Khi vừa mount là refresh, => lấy dữ liệu từ CSDL
         this.refreshReaderList();
     }
-
 }
 </script>
 <template>
@@ -113,9 +113,9 @@ export default {
                     </div>
 
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
-                    <ReaderList v-if="filteredReadersCount > 0" :readers="filteredReaders"
-                        v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có Độc giả nào.</p>
+                    <ListEntity v-if="filteredReadersCount > 0" :entities="filteredReaders"
+                        v-model:activeIndex="activeIndex" :interfaceType="READER_TYPE"></ListEntity>
+                    <p v-else>Không có Độc giả nào!</p>
                 </div>
 
                 <!-- ReaderAdd và ReaderEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

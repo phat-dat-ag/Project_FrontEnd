@@ -1,18 +1,19 @@
 <script>
 import InputSearch from '@/components/InputSearch.vue';
-import BookList from '@/components/Book/BookList.vue';
 import bookService from '@/services/book.service';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { BOOK_TYPE } from '@/constants/form.constants';
+import ListEntity from '@/entities/ListEntity.vue';
 export default {
     components: {
-        InputSearch, BookList,
+        InputSearch, ListEntity
     },
     data() {
         return {
             books: [],
             searchText: "",
             activeIndex: -1,
+            BOOK_TYPE,
         }
     },
     watch: {
@@ -112,8 +113,9 @@ export default {
                     </div>
 
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
-                    <BookList v-if="filteredBooksCount > 0" :books="filteredBooks" v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có Sách nào.</p>
+                    <ListEntity v-if="filteredBooksCount > 0" :entities="filteredBooks"
+                        v-model:activeIndex="activeIndex" :interfaceType="BOOK_TYPE"></ListEntity>
+                    <p v-else>Không có Sách nào!</p>
                 </div>
 
                 <!-- BookAdd và BookEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->

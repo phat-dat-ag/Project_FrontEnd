@@ -1,18 +1,19 @@
 <script>
 import InputSearch from '@/components/InputSearch.vue';
-import StaffList from '@/components/Staff/StaffList.vue';
 import staffService from '@/services/staff.service';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { STAFF_TYPE } from '@/constants/form.constants';
+import ListEntity from '@/entities/ListEntity.vue';
 export default {
     components: {
-        InputSearch, StaffList,
+        InputSearch, ListEntity
     },
     data() {
         return {
             staffs: [],
             searchText: "",
             activeIndex: -1,
+            STAFF_TYPE,
         }
     },
     watch: {
@@ -112,9 +113,9 @@ export default {
                     </div>
 
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
-                    <StaffList v-if="filteredStaffsCount > 0" :staffs="filteredStaffs"
-                        v-model:activeIndex="activeIndex" />
-                    <p v-else>Không có Nhân viên nào.</p>
+                    <ListEntity v-if="filteredStaffsCount > 0" :entities="filteredStaffs"
+                        v-model:activeIndex="activeIndex" :interfaceType="STAFF_TYPE"></ListEntity>
+                    <p v-else>Không có Nhân viên nào!</p>
                 </div>
 
                 <!-- StaffCard và StaffEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
