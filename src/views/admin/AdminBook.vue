@@ -3,7 +3,7 @@ import InputSearch from '@/components/InputSearch.vue';
 import bookService from '@/services/book.service';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { BOOK_TYPE } from '@/constants/form.constants';
-import ListEntity from '@/entities/ListEntity.vue';
+import ListEntity from '@/components/entities/ListEntity.vue';
 export default {
     components: {
         InputSearch, ListEntity

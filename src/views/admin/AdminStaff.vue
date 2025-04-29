@@ -3,7 +3,7 @@ import InputSearch from '@/components/InputSearch.vue';
 import staffService from '@/services/staff.service';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { STAFF_TYPE } from '@/constants/form.constants';
-import ListEntity from '@/entities/ListEntity.vue';
+import ListEntity from '@/components/entities/ListEntity.vue';
 export default {
     components: {
         InputSearch, ListEntity

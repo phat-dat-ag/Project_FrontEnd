@@ -1,20 +1,20 @@
 import { createWebHistory, createRouter } from "vue-router";
-import AdminHome from "@/views/AdminHome.vue";
-import AdminReader from "@/views/AdminReader.vue";
-import AdminBook from "@/views/AdminBook.vue";
-import AdminPublisher from "@/views/AdminPublisher.vue";
-import AdminStaff from "@/views/AdminStaff.vue";
-import AdminTransaction from "@/views/AdminTransaction.vue";
-import UserLogin from "@/views/UserLogin.vue";
-import AdminLogin from "@/views/AdminLogin.vue";
-import AdminUI from "@/views/AdminUI.vue";
-import ReaderUI from "@/views/ReaderUI.vue";
-import StaffUI from "@/views/StaffUI.vue";
+import AdminHome from "@/views/admin/AdminHome.vue";
+import AdminReader from "@/views/admin/AdminReader.vue";
+import AdminBook from "@/views/admin/AdminBook.vue";
+import AdminPublisher from "@/views/admin/AdminPublisher.vue";
+import AdminStaff from "@/views/admin/AdminStaff.vue";
+import AdminTransaction from "@/views/admin/AdminTransaction.vue";
+import UserLogin from "@/views/login/UserLogin.vue";
+import AdminLogin from "@/views/login/AdminLogin.vue";
+import AdminUI from "@/views/admin/AdminUI.vue";
+import ReaderUI from "@/views/reader/ReaderUI.vue";
+import StaffUI from "@/views/staff/StaffUI.vue";
 import NotFound from "@/views/NotFound.vue";
-import StaffTracking from "@/views/StaffTracking.vue"
-import ReaderBorrowing from "@/views/ReaderBorrowing.vue";
-import StaffAccount from "@/views/StaffAccount.vue";
-import ReaderAccount from "@/views/ReaderAccount.vue";
+import StaffTracking from "@/views/staff/StaffTracking.vue"
+import ReaderBorrowing from "@/views/reader/ReaderBorrowing.vue";
+import StaffAccount from "@/views/staff/StaffAccount.vue";
+import ReaderAccount from "@/views/reader/ReaderAccount.vue";
 
 const routes = [
     // User- Login
@@ -121,14 +121,14 @@ const routes = [
             {
                 path: "add-entity",
                 name: "entity.add",
-                component: () => import("@/entities/AddEntity.vue"),
+                component: () => import("@/components/entities/AddEntity.vue"),
                 props: true,
             },
             // Khi chỉnh dữ liệu
             {
                 path: "edit-entity:id",
                 name: "entity.edit",
-                component: () => import("@/entities/EditEntity.vue"),
+                component: () => import("@/components/entities/EditEntity.vue"),
                 props: true,
             },
         ]

@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import BookForm from "@/components/Book/BookForm.vue";
-import PublisherForm from "@/components/Publisher/PublisherForm.vue";
-import ReaderForm from "@/components/Reader/ReaderForm.vue";
-import StaffForm from "@/components/Staff/StaffForm.vue";
-import TransactionForm from "@/components/Transaction/TransactionForm.vue";
+import BookForm from "@/components/forms/BookForm.vue";
+import PublisherForm from "@/components/forms/PublisherForm.vue";
+import ReaderForm from "@/components/forms/ReaderForm.vue";
+import StaffForm from "@/components/forms/StaffForm.vue";
+import TransactionForm from "@/components/forms/TransactionForm.vue";
 import bookService from "@/services/book.service";
 import publisherService from "@/services/publisher.service";
 import readerService from "@/services/reader.service";

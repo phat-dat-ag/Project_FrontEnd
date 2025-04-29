@@ -83,7 +83,7 @@ export default {
 </template>
 
 <style scoped>
-@import "../assets/form.css";
+@import "@/assets/form.css";
 
 .form-container {
     margin: 100px auto;
