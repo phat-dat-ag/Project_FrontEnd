@@ -6,6 +6,9 @@ class TransactionService {
     async getAll() {
         return (await this.api.get("/")).data;
     }
+    async getAllTransactionWithFullInformation() {
+        return (await this.api.get("/find_all_with/information")).data;
+    }
     async create(data) {
         return (await this.api.post("/", data)).data;
     }

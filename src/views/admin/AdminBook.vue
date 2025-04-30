@@ -47,7 +47,7 @@ export default {
         // Lấy toàn bộ các đối tượng book từ CSDL
         async retrieveBookList() {
             try {
-                this.books = await bookService.getAll();
+                this.books = await bookService.getAllBookWithPublisher();
                 // console.log(this.books);
             } catch (error) {
                 console.log(error);

@@ -1,8 +1,4 @@
 <script>
-import bookService from '@/services/book.service';
-import publisherService from '@/services/publisher.service';
-import readerService from '@/services/reader.service';
-import staffService from '@/services/staff.service';
 import Card from '@/components/Card.vue';
 import { useFormTypeStore } from '@/stores/formtype.stores';
 import { BOOK_TYPE, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from '@/constants/form.constants';
@@ -51,45 +47,11 @@ export default {
             return infor;
         },
         // Lấy thông tin cho chung Publisher, Staff, Reader: đều không liên quan đến thằng khác
-        getNormalInfor(infor, keys) {
+        getEntityInfor(infor, keys) {
             let inforArr = [];
             for (let entity of this.entities) {
                 // Chuyển từng entity đã được cập nhật thành dữ liệu hiển thị
                 let newEntityInfor = this.changeToInfor(entity, infor, keys);
-                inforArr.push(newEntityInfor);
-            }
-            return inforArr;
-        },
-        // Lấy thông tin cho riêng Book
-        async getBookInfor() {
-            let inforArr = [];
-            for (let entitiy of this.entities) {
-                const publisher = await publisherService.get(entitiy.publisher_id);
-                const updatedBook = {
-                    ...entitiy,
-                    publisher_name: publisher.name,
-                }
-                // Chuyển từng entity đã được cập nhật thành dữ liệu hiển thị
-                let newEntityInfor = this.changeToInfor(updatedBook, bookInfor, ["name"]);
-                inforArr.push(newEntityInfor);
-            }
-            return inforArr;
-        },
-        // Lấy thông tin cho riêng Transaction
-        async getTransactionInfor() {
-            let inforArr = [];
-            for (let entitiy of this.entities) {
-                const book = await bookService.get(entitiy.book_id);
-                const reader = await readerService.get(entitiy.reader_id);
-                const staff = await staffService.get(entitiy.staff_id);
-                let updatedTransaction = {
-                    ...entitiy,
-                    book_name: book.name,
-                    reader_name: reader.last_name,
-                    staff_name: staff.fullname,
-                }
-                // Chuyển từng entity đã được cập nhật thành dữ liệu hiển thị
-                let newEntityInfor = this.changeToInfor(updatedTransaction, transactionInfor, ["reader_name", "status", "book_name"]);
                 inforArr.push(newEntityInfor);
             }
             return inforArr;
@@ -99,23 +61,23 @@ export default {
         async getFullEntityInfor() {
             switch (this.interfaceType) {
                 case PUBLISHER_TYPE:
-                    this.fullEntityInfor = this.getNormalInfor(publisherInfor, ["name"]);
+                    this.fullEntityInfor = this.getEntityInfor(publisherInfor, ["name"]);
                     this.titleCard = "Thông tin Nhà xuất bản";
                     break;
                 case READER_TYPE:
-                    this.fullEntityInfor = this.getNormalInfor(readerInfor, ["first_name", "last_name"]);
+                    this.fullEntityInfor = this.getEntityInfor(readerInfor, ["first_name", "last_name"]);
                     this.titleCard = "Thông tin Độc giả";
                     break;
                 case STAFF_TYPE:
-                    this.fullEntityInfor = this.getNormalInfor(staffInfor, ["fullname"]);
+                    this.fullEntityInfor = this.getEntityInfor(staffInfor, ["fullname"]);
                     this.titleCard = "Thông tin Nhân viên";
                     break;
                 case BOOK_TYPE:
-                    this.fullEntityInfor = await this.getBookInfor();
+                    this.fullEntityInfor = this.getEntityInfor(bookInfor, ["name"]);
                     this.titleCard = "Thông tin Sách";
                     break;
                 case TRANSACTION_TYPE:
-                    this.fullEntityInfor = await this.getTransactionInfor();
+                    this.fullEntityInfor = this.getEntityInfor(transactionInfor, ["reader_fullname", "status", "book_name"]);
                     this.titleCard = "Thông tin Giao dịch mượn sách";
                     break;
                 default:

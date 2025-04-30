@@ -7,6 +7,9 @@ class BookService {
     async getAll() {
         return (await this.api.get("/")).data;
     }
+    async getAllBookWithPublisher() {
+        return (await this.api.get("/find_all_with/pubisher")).data;
+    }
     async create(data) {
         return (await this.api.post("/", data)).data;
     }

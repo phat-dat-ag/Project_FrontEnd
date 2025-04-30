@@ -47,7 +47,7 @@ export default {
         // Lấy toàn bộ các đối tượng transaction từ CSDL
         async retrieveTransactionList() {
             try {
-                this.transactions = await transactionService.getAll();
+                this.transactions = await transactionService.getAllTransactionWithFullInformation();
                 // console.log(this.transactions);
             } catch (error) {
                 console.log(error);

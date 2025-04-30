@@ -40,8 +40,9 @@ export const staffInfor = {
 export const transactionInfor = {
     _id: { label: "Mã giao dịch", },
     book_name: { label: "Sách", },
-    reader_name: { label: "Độc giả", },
-    staff_name: { label: "Nhân viên", },
+    publisher_name: { label: "Nhà xuất bản" },
+    reader_fullname: { label: "Độc giả", },
+    staff_fullname: { label: "Nhân viên", },
     borrow_date: { label: "Ngày mượn", },
     return_date: { label: "Ngày trả", },
     status: { label: "Trạng thái" }
