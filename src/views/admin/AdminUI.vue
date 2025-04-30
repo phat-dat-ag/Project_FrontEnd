@@ -14,27 +14,29 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'reader' }" class="nav-link">
+                        <router-link :to="{ name: 'reader' }" class="nav-link" @click="handleSetNewType(READER_TYPE)">
                             Độc giả
                         </router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link :to="{ name: 'book' }" class="nav-link">
+                    <li class=" nav-item">
+                        <router-link :to="{ name: 'book' }" class="nav-link" @click="handleSetNewType(BOOK_TYPE)">
                             Sách
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'publisher' }" class="nav-link">
+                        <router-link :to="{ name: 'publisher' }" class="nav-link"
+                            @click="handleSetNewType(PUBLISHER_TYPE)">
                             Nhà xuất bản
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'staff' }" class="nav-link">
+                        <router-link :to="{ name: 'staff' }" class="nav-link" @click="handleSetNewType(STAFF_TYPE)">
                             Nhân viên
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'transaction' }" class="nav-link">
+                        <router-link :to="{ name: 'transaction' }" class="nav-link"
+                            @click="handleSetNewType(TRANSACTION_TYPE)">
                             Theo dõi mượn sách
                         </router-link>
                     </li>
@@ -43,15 +45,33 @@
             </div>
         </div>
     </nav>
-    <router-view></router-view>
+    <!-- Yêu cầu mỗi lần gọi phải tạo lại component, không tái sử dụng -->
+    <!-- Nếu không có :key thì cách này (tái sử dụng AdminPage) sai, còn không tái sử dụng thì đúng -->
+    <router-view :key="$route.fullPath"></router-view>
 </template>
 <script>
+import { BOOK_TYPE, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from '@/constants/form.constants';
+import { useFormTypeStore } from '@/stores/formtype.stores';
+
 export default {
+    data: () => {
+        return {
+            BOOK_TYPE,
+            PUBLISHER_TYPE,
+            READER_TYPE,
+            STAFF_TYPE,
+            TRANSACTION_TYPE,
+        }
+    },
     methods: {
         logout() {
             localStorage.removeItem("token");
             this.$router.push({ name: "loginUser" });
         },
+        handleSetNewType(newType) {
+            const formtype = useFormTypeStore();
+            formtype.setFormType(newType);
+        }
     }
 }
 </script>

@@ -1,10 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
 import AdminHome from "@/views/admin/AdminHome.vue";
-import AdminReader from "@/views/admin/AdminReader.vue";
-import AdminBook from "@/views/admin/AdminBook.vue";
-import AdminPublisher from "@/views/admin/AdminPublisher.vue";
-import AdminStaff from "@/views/admin/AdminStaff.vue";
-import AdminTransaction from "@/views/admin/AdminTransaction.vue";
 import UserLogin from "@/views/login/UserLogin.vue";
 import AdminLogin from "@/views/login/AdminLogin.vue";
 import AdminUI from "@/views/admin/AdminUI.vue";
@@ -95,27 +90,27 @@ const routes = [
             {
                 path: "reader",
                 name: "reader",
-                component: AdminReader,
+                component: () => import("@/components/PageAdmin.vue"),
             },
             {
                 path: "book",
                 name: "book",
-                component: AdminBook,
+                component: () => import("@/components/PageAdmin.vue"),
             },
             {
                 path: "publisher",
                 name: "publisher",
-                component: AdminPublisher,
+                component: () => import("@/components/PageAdmin.vue"),
             },
             {
                 path: "staff",
                 name: "staff",
-                component: AdminStaff,
+                component: () => import("@/components/PageAdmin.vue"),
             },
             {
                 path: "transaction",
                 name: "transaction",
-                component: AdminTransaction,
+                component: () => import("@/components/PageAdmin.vue"),
             },
             // Khi thêm dữ liệu
             {
