@@ -42,8 +42,8 @@ export default {
             let titleString = "";
             for (let key of keys)
                 titleString += `${infor[key].value} `;
-            // Bổ sung title để đặt cho từng thẻ trong list
-            infor.title = titleString;
+            // Bổ sung titleElement để đặt cho từng thẻ trong list
+            infor.titleElement = titleString;
             return infor;
         },
         // Lấy thông tin cho chung Publisher, Staff, Reader: đều không liên quan đến thằng khác
@@ -107,7 +107,7 @@ export default {
     <ul class="list-group">
         <li class="list-group-item list-group-item-dark" v-for="(entity, index) in fullEntityInfor" :key="index"
             :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
-            {{ entity.title }}
+            {{ entity.titleElement }}
             <div v-if="index === activeIndex">
                 <Card :Infor="entity" :title="titleCard"></Card>
                 <router-link :to="{

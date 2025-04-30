@@ -1,6 +1,6 @@
 // Đối tượng chứa đối tượng => Cẩn thận khi tham chiếu
 // ở ListEntity sẽ bổ sung thuộc tính value cho mỗi đối tượng {label, value}
-// title sau khi bổ sung chỉ đơn giản là kiểu String
+// titleElement sau khi bổ sung chỉ đơn giản là kiểu String
 
 export const bookInfor = {
     _id: { label: "Mã sách", },
