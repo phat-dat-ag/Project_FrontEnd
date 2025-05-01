@@ -142,7 +142,7 @@ export default {
 
                     <!-- Chỗ này Tìm kiếm nè: mỗi khi searchText thay đổi thì đều lấy lại danh sách tìm kiếm -->
                     <ListEntity v-if="filteredEntitiesCount > 0" :entities="filteredEntities"
-                        v-model:activeIndex="activeIndex" :interfaceType="this.selectedFormType"></ListEntity>
+                        v-model:activeIndex="activeIndex"></ListEntity>
                     <p v-else>{{ selectedPageAdminDes.nodataNotify }}</p>
                 </div>
 

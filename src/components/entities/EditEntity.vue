@@ -23,7 +23,6 @@ import transactionService from "@/services/transaction.service";
 import { useFormTypeStore } from "@/stores/formtype.stores";
 import { BOOK_TYPE, formDescriptions, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from "@/constants/form.constants";
 import { markRaw } from "vue";
-import { storeToRefs } from "pinia";
 export default {
     components: {
         BookForm, PublisherForm, ReaderForm, StaffForm, TransactionForm
@@ -114,8 +113,7 @@ export default {
     },
     created() {
         const formtype = useFormTypeStore();
-        const { getFormType } = storeToRefs(formtype);
-        this.selectedFormType = getFormType;
+        this.selectedFormType = formtype.getFormType;
         this.initData();
         this.getEntity(this.id);
         this.message = "";

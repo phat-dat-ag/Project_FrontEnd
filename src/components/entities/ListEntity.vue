@@ -12,8 +12,6 @@ export default {
         entities: { type: Array, default: () => [], required: true },
         // Có liên quan chức năng Tìm kiếm, nên không xóa
         activeIndex: { type: Number, default: -1 },
-        // Nhận vào kiểu giao diện: book, reader, staff,...
-        interfaceType: { type: Number, required: true }
     },
     emits: ["update:activeIndex"],
     data() {
@@ -22,6 +20,8 @@ export default {
             fullEntityInfor: [],
             // Tiêu đề của Card
             titleCard: "",
+            // Loại giao diện đang yêu cầu
+            selectedFormType: null,
         }
     },
     methods: {
@@ -59,7 +59,7 @@ export default {
         // Lấy đầy đủ thông tin để hiển thị
         // Xác định tiêu đề của Card
         async getFullEntityInfor() {
-            switch (this.interfaceType) {
+            switch (this.selectedFormType) {
                 case PUBLISHER_TYPE:
                     this.fullEntityInfor = this.getEntityInfor(publisherInfor, ["name"]);
                     this.titleCard = "Thông tin Nhà xuất bản";
@@ -84,11 +84,6 @@ export default {
                     confirm("Có lỗi xảy ra khi hiển thị danh sách");
             }
         },
-        // set lại type cho form
-        handleClickUpdateButton() {
-            const formTypeStore = useFormTypeStore();
-            formTypeStore.setFormType(this.interfaceType);
-        }
     },
     watch: {
         // entities thay đổi thì cập nhật lại
@@ -98,6 +93,8 @@ export default {
         }
     },
     created() {
+        const formtype = useFormTypeStore();
+        this.selectedFormType = formtype.getFormType;
         this.getFullEntityInfor();
     }
 }
@@ -114,7 +111,7 @@ export default {
                     name: 'entity.edit',
                     params: { id: entity._id.value },
                 }">
-                    <button class="btn btn-warning" @click="handleClickUpdateButton">Hiệu chỉnh</button>
+                    <button class="btn btn-warning">Hiệu chỉnh</button>
                 </router-link>
             </div>
         </li>
