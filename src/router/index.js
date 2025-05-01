@@ -91,40 +91,96 @@ const routes = [
                 path: "reader",
                 name: "reader",
                 component: () => import("@/components/PageAdmin.vue"),
+                children: [
+                    {
+                        path: "add",
+                        name: "reader.add",
+                        component: () => import("@/components/entities/AddEntity.vue"),
+                        props: true,
+                    },
+                    {
+                        path: "edit/:id",
+                        name: "reader.edit",
+                        component: () => import("@/components/entities/EditEntity.vue"),
+                        props: true,
+                    },
+                ]
             },
             {
                 path: "book",
                 name: "book",
                 component: () => import("@/components/PageAdmin.vue"),
+                children: [
+                    {
+                        path: "add",
+                        name: "book.add",
+                        component: () => import("@/components/entities/AddEntity.vue"),
+                        props: true,
+                    },
+                    {
+                        path: "edit/:id",
+                        name: "book.edit",
+                        component: () => import("@/components/entities/EditEntity.vue"),
+                        props: true,
+                    },
+                ]
             },
             {
                 path: "publisher",
                 name: "publisher",
                 component: () => import("@/components/PageAdmin.vue"),
+                children: [
+                    {
+                        path: "add",
+                        name: "publisher.add",
+                        component: () => import("@/components/entities/AddEntity.vue"),
+                        props: true,
+                    },
+                    {
+                        path: "edit/:id",
+                        name: "publisher.edit",
+                        component: () => import("@/components/entities/EditEntity.vue"),
+                        props: true,
+                    },
+                ]
             },
             {
                 path: "staff",
                 name: "staff",
                 component: () => import("@/components/PageAdmin.vue"),
+                children: [
+                    {
+                        path: "add",
+                        name: "staff.add",
+                        component: () => import("@/components/entities/AddEntity.vue"),
+                        props: true,
+                    },
+                    {
+                        path: "edit/:id",
+                        name: "staff.edit",
+                        component: () => import("@/components/entities/EditEntity.vue"),
+                        props: true,
+                    },
+                ]
             },
             {
                 path: "transaction",
                 name: "transaction",
                 component: () => import("@/components/PageAdmin.vue"),
-            },
-            // Khi thêm dữ liệu
-            {
-                path: "add-entity",
-                name: "entity.add",
-                component: () => import("@/components/entities/AddEntity.vue"),
-                props: true,
-            },
-            // Khi chỉnh dữ liệu
-            {
-                path: "edit-entity:id",
-                name: "entity.edit",
-                component: () => import("@/components/entities/EditEntity.vue"),
-                props: true,
+                children: [
+                    {
+                        path: "add",
+                        name: "transaction.add",
+                        component: () => import("@/components/entities/AddEntity.vue"),
+                        props: true,
+                    },
+                    {
+                        path: "edit/:id",
+                        name: "transaction.edit",
+                        component: () => import("@/components/entities/EditEntity.vue"),
+                        props: true,
+                    },
+                ]
             },
         ]
     },

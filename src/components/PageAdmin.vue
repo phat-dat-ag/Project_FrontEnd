@@ -76,7 +76,7 @@ export default {
         },
         // Chức năng thêm mới
         goToAddEntity() {
-            this.$router.push({ name: "entity.add" });
+            this.$router.push({ name: this.selectedPageAdminDes.addEntityName });
         },
         initData() {
             switch (this.selectedAdminUIType) {
@@ -146,9 +146,9 @@ export default {
                     <p v-else>{{ selectedPageAdminDes.nodataNotify }}</p>
                 </div>
 
-                <!-- BookAdd và BookEdit: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
+                <!-- AddEntity và EditEntity: chiếm 12 cột trên mobile, và 6 cột trên tablet và laptop -->
                 <div class="col-12 col-md-6">
-
+                    <router-view></router-view>
                 </div>
             </div>
         </div>

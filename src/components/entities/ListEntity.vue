@@ -3,6 +3,7 @@ import Card from '@/components/Card.vue';
 import { useAdminUITypeStore } from '@/stores/admin_ui_type.stores';
 import { BOOK_TYPE, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from '@/constants/form.constants';
 import { bookInfor, publisherInfor, readerInfor, staffInfor, transactionInfor } from '@/constants/inforcard.constant';
+import { pageAdminDescriptions } from '@/constants/pageadmin.constants';
 export default {
     components: {
         Card,
@@ -22,6 +23,8 @@ export default {
             titleCard: "",
             // Loại giao diện đang yêu cầu
             selectedAdminUIType: null,
+            // Thông tin hiển thị giao diện
+            selectedListEntityDes: null,
         }
     },
     methods: {
@@ -62,23 +65,23 @@ export default {
             switch (this.selectedAdminUIType) {
                 case PUBLISHER_TYPE:
                     this.fullEntityInfor = this.getEntityInfor(publisherInfor, ["name"]);
-                    this.titleCard = "Thông tin Nhà xuất bản";
+                    this.selectedListEntityDes = pageAdminDescriptions.publisher;
                     break;
                 case READER_TYPE:
                     this.fullEntityInfor = this.getEntityInfor(readerInfor, ["first_name", "last_name"]);
-                    this.titleCard = "Thông tin Độc giả";
+                    this.selectedListEntityDes = pageAdminDescriptions.reader;
                     break;
                 case STAFF_TYPE:
                     this.fullEntityInfor = this.getEntityInfor(staffInfor, ["fullname"]);
-                    this.titleCard = "Thông tin Nhân viên";
+                    this.selectedListEntityDes = pageAdminDescriptions.staff;
                     break;
                 case BOOK_TYPE:
                     this.fullEntityInfor = this.getEntityInfor(bookInfor, ["name"]);
-                    this.titleCard = "Thông tin Sách";
+                    this.selectedListEntityDes = pageAdminDescriptions.book;
                     break;
                 case TRANSACTION_TYPE:
                     this.fullEntityInfor = this.getEntityInfor(transactionInfor, ["reader_fullname", "status", "book_name"]);
-                    this.titleCard = "Thông tin Giao dịch mượn sách";
+                    this.selectedListEntityDes = pageAdminDescriptions.transaction;
                     break;
                 default:
                     confirm("Có lỗi xảy ra khi hiển thị danh sách");
@@ -106,9 +109,9 @@ export default {
             :class="{ active: index === activeIndex }" @click="updateActiveIndex(index)">
             {{ entity.titleElement }}
             <div v-if="index === activeIndex">
-                <Card :Infor="entity" :title="titleCard"></Card>
+                <Card :Infor="entity" :title="selectedListEntityDes.titleCard"></Card>
                 <router-link :to="{
-                    name: 'entity.edit',
+                    name: selectedListEntityDes.editEntityName,
                     params: { id: entity._id.value },
                 }">
                     <button class="btn btn-warning">Hiệu chỉnh</button>
