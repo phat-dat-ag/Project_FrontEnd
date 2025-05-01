@@ -4,14 +4,14 @@ import publisherService from "@/services/publisher.service";
 import readerService from "@/services/reader.service";
 import staffService from "@/services/staff.service";
 import transactionService from "@/services/transaction.service";
-import { useFormTypeStore } from "@/stores/formtype.stores";
+import { useAdminUITypeStore } from "@/stores/admin_ui_type.stores";
 
 export async function getAllEntities() {
     let entities = [];
     // Lấy từ Pinia
-    const type = useFormTypeStore();
+    const type = useAdminUITypeStore();
     try {
-        switch (type.getFormType) {
+        switch (type.getAdminUIType) {
             case BOOK_TYPE:
                 entities = await bookService.getAllBookWithPublisher();
                 break;

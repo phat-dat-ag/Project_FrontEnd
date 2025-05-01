@@ -20,7 +20,7 @@ import publisherService from "@/services/publisher.service";
 import readerService from "@/services/reader.service";
 import staffService from "@/services/staff.service";
 import transactionService from "@/services/transaction.service";
-import { useFormTypeStore } from "@/stores/formtype.stores";
+import { useAdminUITypeStore } from "@/stores/admin_ui_type.stores";
 import { BOOK_TYPE, formDescriptions, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from "@/constants/form.constants";
 import { markRaw } from "vue";
 export default {
@@ -37,7 +37,7 @@ export default {
             selectedFormDes: null, // Các tiêu đề của trang được chọn
             selectedService: null,
             selectedComponent: null,
-            selectedFormType: null, // Loại form đang được yêu cầu
+            selectedAdminUIType: null, // Loại form đang được yêu cầu
         };
     },
     methods: {
@@ -80,7 +80,7 @@ export default {
             }
         },
         initData() {
-            switch (this.selectedFormType) {
+            switch (this.selectedAdminUIType) {
                 case BOOK_TYPE:
                     this.selectedService = bookService;
                     this.selectedFormDes = formDescriptions.book;
@@ -112,8 +112,8 @@ export default {
         }
     },
     created() {
-        const formtype = useFormTypeStore();
-        this.selectedFormType = formtype.getFormType;
+        const adminUIType = useAdminUITypeStore();
+        this.selectedAdminUIType = adminUIType.getAdminUIType;
         this.initData();
         this.getEntity(this.id);
         this.message = "";

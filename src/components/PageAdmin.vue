@@ -5,7 +5,7 @@ import readerService from "@/services/reader.service";
 import staffService from "@/services/staff.service";
 import transactionService from "@/services/transaction.service";
 import InputSearch from '@/components/InputSearch.vue';
-import { useFormTypeStore } from '@/stores/formtype.stores';
+import { useAdminUITypeStore } from '@/stores/admin_ui_type.stores';
 import ListEntity from '@/components/entities/ListEntity.vue';
 import { BOOK_TYPE, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from "@/constants/form.constants";
 import { pageAdminDescriptions } from '@/constants/pageadmin.constants';
@@ -19,7 +19,7 @@ export default {
             searchText: "",
             activeIndex: -1,
             entities: [],
-            selectedFormType: null,
+            selectedAdminUIType: null,
             selectedPageAdminDes: null,
             selectedService: null
         }
@@ -79,7 +79,7 @@ export default {
             this.$router.push({ name: "entity.add" });
         },
         initData() {
-            switch (this.selectedFormType) {
+            switch (this.selectedAdminUIType) {
                 case BOOK_TYPE:
                     this.selectedPageAdminDes = pageAdminDescriptions.book;
                     this.selectedService = bookService;
@@ -106,8 +106,8 @@ export default {
         }
     },
     created() {
-        const formtype = useFormTypeStore();
-        this.selectedFormType = formtype.getFormType;
+        const adminUIType = useAdminUITypeStore();
+        this.selectedAdminUIType = adminUIType.getAdminUIType;
         this.initData();
         this.retrieveEntityList();
     },

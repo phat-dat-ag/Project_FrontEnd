@@ -51,7 +51,7 @@
 </template>
 <script>
 import { BOOK_TYPE, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from '@/constants/form.constants';
-import { useFormTypeStore } from '@/stores/formtype.stores';
+import { useAdminUITypeStore } from '@/stores/admin_ui_type.stores';
 
 export default {
     data: () => {
@@ -69,8 +69,8 @@ export default {
             this.$router.push({ name: "loginUser" });
         },
         handleSetNewType(newType) {
-            const formtype = useFormTypeStore();
-            formtype.setFormType(newType);
+            const adminUIType = useAdminUITypeStore();
+            adminUIType.setAdminUIType(newType);
         }
     }
 }

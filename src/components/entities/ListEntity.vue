@@ -1,6 +1,6 @@
 <script>
 import Card from '@/components/Card.vue';
-import { useFormTypeStore } from '@/stores/formtype.stores';
+import { useAdminUITypeStore } from '@/stores/admin_ui_type.stores';
 import { BOOK_TYPE, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from '@/constants/form.constants';
 import { bookInfor, publisherInfor, readerInfor, staffInfor, transactionInfor } from '@/constants/inforcard.constant';
 export default {
@@ -21,7 +21,7 @@ export default {
             // Tiêu đề của Card
             titleCard: "",
             // Loại giao diện đang yêu cầu
-            selectedFormType: null,
+            selectedAdminUIType: null,
         }
     },
     methods: {
@@ -59,7 +59,7 @@ export default {
         // Lấy đầy đủ thông tin để hiển thị
         // Xác định tiêu đề của Card
         async getFullEntityInfor() {
-            switch (this.selectedFormType) {
+            switch (this.selectedAdminUIType) {
                 case PUBLISHER_TYPE:
                     this.fullEntityInfor = this.getEntityInfor(publisherInfor, ["name"]);
                     this.titleCard = "Thông tin Nhà xuất bản";
@@ -93,8 +93,8 @@ export default {
         }
     },
     created() {
-        const formtype = useFormTypeStore();
-        this.selectedFormType = formtype.getFormType;
+        const adminUIType = useAdminUITypeStore();
+        this.selectedAdminUIType = adminUIType.getAdminUIType;
         this.getFullEntityInfor();
     }
 }
