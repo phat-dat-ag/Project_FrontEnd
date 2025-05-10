@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import staffService from "./services/staff.service";
 import readerService from "./services/reader.service";
+import adminService from "./services/admin.service";
 
 Yup.addMethod(Yup.string, "checkUsername", function () {
     // .test(name, message error, testFunction)
@@ -14,8 +15,8 @@ Yup.addMethod(Yup.string, "checkUsername", function () {
         if (!value)
             return true;
 
-        // Kiểm tra username trong cả Staff và Reader
-        const isExisted = await staffService.isExistingUsername(value) || await readerService.isExistingUsername(value);
+        // Kiểm tra username trong cả Staff và Reader và cả Admin
+        const isExisted = await staffService.isExistingUsername(value) || await readerService.isExistingUsername(value) || await adminService.isExistingUsername(value);
         if (isExisted)
             return createError({ path, message: "Tên đăng nhập đã tồn tại" });
         return true;

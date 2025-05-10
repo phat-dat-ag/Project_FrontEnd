@@ -131,6 +131,12 @@ export default {
                     Đăng nhập với vai trò Quản trị viên
                 </button>
             </div>
+            <div class="form-group sign-up-option">
+                Chưa có tài khoản?
+                <router-link :to="{ name: 'reader.signup' }">
+                    Đăng ký tại đây!
+                </router-link>
+            </div>
         </Form>
     </div>
 </template>
@@ -145,5 +151,9 @@ export default {
     border-radius: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sign-up-option {
+    text-align: center;
 }
 </style>

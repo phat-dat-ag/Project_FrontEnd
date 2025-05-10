@@ -7,6 +7,9 @@ class AdminService {
     async create(data) {
         return (await this.api.post("/", data)).data;
     }
+    async isExistingUsername(username) {
+        return (await this.api.get(`/check/${username}`)).data;
+    }
     async login(data) {
         return (await this.api.post(`/login/account`, data)).data;
     }

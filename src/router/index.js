@@ -12,6 +12,12 @@ import StaffAccount from "@/views/staff/StaffAccount.vue";
 import ReaderAccount from "@/views/reader/ReaderAccount.vue";
 
 const routes = [
+    // Sign up: Dùng chung cho admin, reader, staff
+    {
+        path: "/reader/signup",
+        name: "reader.signup",
+        component: () => import("@/views/signup/ReaderSignUp.vue"),
+    },
     // User- Login
     {
         path: "/",
