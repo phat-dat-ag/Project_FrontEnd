@@ -15,6 +15,7 @@
                         <li class="list-group-item">Xuất xứ: {{ book.publisher_name }}</li>
                         <li class="list-group-item">Xuất bản: {{ book.publication_year }}</li>
                         <li class="list-group-item">Số lượng: {{ book.quantity }}</li>
+                        <li class="list-group-item">Giá: {{ book.price }}</li>
                     </ul>
                 </div>
             </div>
