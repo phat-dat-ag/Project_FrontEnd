@@ -5,6 +5,8 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import readerService from "@/services/reader.service";
 import staffService from "@/services/staff.service";
 import adminService from "@/services/admin.service";
+import { useUserRoleStore } from "@/stores/user_role_stores";
+import { USER_READER, USER_STAFF } from "@/constants/registerform.constant";
 
 export default {
     components: {
@@ -43,15 +45,21 @@ export default {
                 // lưu token lên localStorage
                 localStorage.setItem("token", result.token);
                 const token = localStorage.getItem("token");
+
+                // Lưu trữ ai đăng nhập lên localStorage
+                const userRole = useUserRoleStore();
+
                 if (token) {
                     let userReader = await readerService.getProfile(token);
                     // Là Reader
                     if (userReader) {
+                        userRole.setUserRole(USER_READER);
                         this.$router.push({ name: "interfaceReader" });
                     } else {
                         let userStaff = await staffService.getProfile(token);
                         // Là Staff
                         if (userStaff) {
+                            userRole.setUserRole(USER_STAFF);
                             this.$router.push({ name: "interfaceStaff" });
                         }
                     }

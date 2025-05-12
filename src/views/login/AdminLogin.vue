@@ -2,6 +2,8 @@
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import adminService from "@/services/admin.service";
+import { useUserRoleStore } from "@/stores/user_role_stores";
+import { ADMIN } from "@/constants/registerform.constant";
 
 export default {
     components: {
@@ -29,8 +31,11 @@ export default {
             // Đăng nhập thành công => {success,  token}
             // Đăng nhập thất bại => false
 
-            // Kiểm tra coi phải là reader không
+            // Kiểm tra coi phải là admin không
             result = await adminService.login(input);
+
+            // Lưu lên localStorage xem ai đang đăng nhập
+            const userRole = useUserRoleStore();
 
             // Khi đã đăng nhập thành công
             if (result && result.token) {
@@ -38,6 +43,7 @@ export default {
                 localStorage.setItem("token", result.token);
                 const token = localStorage.getItem("token");
                 if (token) {
+                    userRole.setUserRole(ADMIN);
                     this.$router.push({ name: "interfaceAdmin" });
                 }
             }
