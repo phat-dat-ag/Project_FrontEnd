@@ -80,7 +80,7 @@ export default {
                     this.selectedListEntityDes = pageAdminDescriptions.book;
                     break;
                 case TRANSACTION_TYPE:
-                    this.fullEntityInfor = this.getEntityInfor(transactionInfor, ["reader_fullname", "status", "book_name"]);
+                    this.fullEntityInfor = this.getEntityInfor(transactionInfor, ["reader_fullname", "book_name"]);
                     this.selectedListEntityDes = pageAdminDescriptions.transaction;
                     break;
                 default:
