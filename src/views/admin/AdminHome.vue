@@ -4,34 +4,26 @@
         <div class="row justify-content-center">
             <div class="d-flex justify-content-center col-12 col-sm-6 col-md-4 mb-2" v-if="this.bookList.length > 0"
                 v-for="(book, index) in bookList">
-                <div class="card" style="width: 18rem;" :key="index">
-                    <img :src="book.img" class="card-img-top" :alt="book.name">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ book.name }}</h5>
-                        <p class="card-text">Bán chạy</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Tác giả: {{ book.author }}</li>
-                        <li class="list-group-item">Xuất xứ: {{ book.publisher_name }}</li>
-                        <li class="list-group-item">Xuất bản: {{ book.publication_year }}</li>
-                        <li class="list-group-item">Số lượng: {{ book.quantity }}</li>
-                        <li class="list-group-item">Giá: {{ book.price }}</li>
-                    </ul>
-                </div>
+                <CardItem :index_key="index" :book="book" :isReader="isReader"></CardItem>
             </div>
         </div>
     </div>
 </template>
 <script>
+import CardItem from '@/components/CardItem.vue';
+import { USER_READER } from '@/constants/registerform.constant';
 import bookService from '@/services/book.service';
 import publisherService from '@/services/publisher.service';
+import { useUserRoleStore } from '@/stores/user_role_stores';
 export default {
     data() {
         return {
             bookList: [],
             publishers: [],
+            isReader: false,
         }
     },
+    components: { CardItem, },
     methods: {
         async getBooks() {
             return await bookService.getAll();
@@ -48,11 +40,13 @@ export default {
                     publisher_name: publisher.name,
                 })
             }
-        }
+        },
     },
     created() {
         this.getBooks();
         this.getBookList();
+        const userRole = useUserRoleStore();
+        this.isReader = userRole.getUserRole === USER_READER;
     }
 }
 </script>

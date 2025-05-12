@@ -5,6 +5,7 @@ import readerService from "@/services/reader.service";
 import staffService from "@/services/staff.service";
 import transactionService from "@/services/transaction.service";
 import { useAdminUITypeStore } from "@/stores/admin_ui_type.stores";
+import { formatDate, getTransactionStatusTitle } from "@/utils/date.utils";
 
 export async function getAllEntities() {
     let entities = [];
@@ -26,6 +27,13 @@ export async function getAllEntities() {
                 break;
             case TRANSACTION_TYPE:
                 entities = await transactionService.getAllTransactionWithFullInformation();
+                for (let entity of entities) {
+                    entity.request_date = formatDate(entity.request_date);
+                    entity.borrow_date = formatDate(entity.borrow_date);
+                    entity.due_date = formatDate(entity.due_date);
+                    entity.return_date = formatDate(entity.return_date);
+                    entity.status = getTransactionStatusTitle(entity.status);
+                }
                 break;
             default:
                 confirm(`Đã có lỗi trong quá trình getAll dữ liệu!`);

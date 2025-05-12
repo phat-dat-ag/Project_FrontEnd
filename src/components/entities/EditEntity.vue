@@ -23,6 +23,7 @@ import transactionService from "@/services/transaction.service";
 import { useAdminUITypeStore } from "@/stores/admin_ui_type.stores";
 import { BOOK_TYPE, formDescriptions, PUBLISHER_TYPE, READER_TYPE, STAFF_TYPE, TRANSACTION_TYPE } from "@/constants/form.constants";
 import { markRaw } from "vue";
+import { formatDate, getTransactionStatusTitle } from "@/utils/date.utils";
 export default {
     components: {
         BookForm, PublisherForm, ReaderForm, StaffForm, TransactionForm
@@ -38,12 +39,21 @@ export default {
             selectedService: null,
             selectedComponent: null,
             selectedAdminUIType: null, // Loại form đang được yêu cầu
+            // Phát hiện để định dạng ngày lại
+            isTransaction: false,
         };
     },
     methods: {
         async getEntity(id) {
             try {
                 this.entity = await this.selectedService.get(id);
+                if (this.isTransaction) {
+                    this.entity.request_date = formatDate(this.entity.request_date);
+                    this.entity.borrow_date = formatDate(this.entity.borrow_date);
+                    this.entity.due_date = formatDate(this.entity.due_date);
+                    this.entity.return_date = formatDate(this.entity.return_date);
+                    this.entity.status = getTransactionStatusTitle(this.entity.status);
+                }
             } catch (error) {
                 console.log(error);
                 // Chuyển sang trang NotFound đồng thời giữ cho URL không đổi
@@ -105,6 +115,7 @@ export default {
                     this.selectedService = transactionService;
                     this.selectedFormDes = formDescriptions.transaction;
                     this.selectedComponent = markRaw(TransactionForm);
+                    this.isTransaction = true;
                     break;
                 default:
                     confirm("Lỗi rồi");

@@ -16,6 +16,7 @@ import readerService from '@/services/reader.service';
 import staffService from '@/services/staff.service';
 import transactionService from '@/services/transaction.service';
 import Card from '@/components/Card.vue';
+import { formatDate } from '@/utils/date.utils';
 
 export default {
     components: {
@@ -57,6 +58,8 @@ export default {
                     ...transactions[i],
                     book_name: book.name,
                     reader_name: reader.first_name + " " + reader.last_name,
+                    borrow_date: formatDate(transactions[i].borrow_date),
+                    return_date: formatDate(transactions[i].return_date),
                 };
                 newTran = await this.getTransactionInfor(newTran);
                 myTransactions.push(newTran);
