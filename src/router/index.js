@@ -8,8 +8,6 @@ import StaffUI from "@/views/staff/StaffUI.vue";
 import NotFound from "@/views/NotFound.vue";
 import StaffTracking from "@/views/staff/StaffTracking.vue"
 import ReaderBorrowing from "@/views/reader/ReaderBorrowing.vue";
-import StaffAccount from "@/views/staff/StaffAccount.vue";
-import ReaderAccount from "@/views/reader/ReaderAccount.vue";
 
 const routes = [
     // Sign up: Dùng chung cho admin, reader, staff
@@ -45,7 +43,7 @@ const routes = [
             {
                 path: "account",
                 name: "readerAccount",
-                component: ReaderAccount,
+                component: () => import("@/components/MyAccount.vue"),
             }
 
         ]
@@ -71,7 +69,7 @@ const routes = [
             {
                 path: "account",
                 name: "staffAccount",
-                component: StaffAccount,
+                component: () => import("@/components/MyAccount.vue"),
             }
         ]
     },

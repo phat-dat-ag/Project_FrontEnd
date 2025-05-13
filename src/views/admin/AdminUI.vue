@@ -65,7 +65,8 @@ export default {
     },
     methods: {
         logout() {
-            localStorage.removeItem("token");
+            // Xóa hết các key: value trên localStorage
+            localStorage.clear();
             this.$router.push({ name: "loginUser" });
         },
         handleSetNewType(newType) {
