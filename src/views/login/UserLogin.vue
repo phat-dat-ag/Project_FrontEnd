@@ -1,35 +1,24 @@
 <script>
 import { jwtDecode } from "jwt-decode";
-import * as yup from "yup";
-import { Form, Field, ErrorMessage } from "vee-validate";
 import readerService from "@/services/reader.service";
 import staffService from "@/services/staff.service";
 import adminService from "@/services/admin.service";
 import { useUserRoleStore } from "@/stores/user_role_stores";
 import { USER_READER, USER_STAFF } from "@/constants/registerform.constant";
+import LogInForm from "@/components/forms/LogInForm.vue";
+import { userLoginDescription } from "@/constants/loginform.constants";
 
 export default {
     components: {
-        Form,
-        Field,
-        ErrorMessage,
+        LogInForm,
     },
     data() {
-        const FormSchema = yup.object().shape({
-            username: yup.string().required("Tên đăng nhập không được để trống"),
-            password: yup.string().required("Mật khẩu không được để trống"),
-        })
         return {
-            username: "",
-            password: "",
-            FormSchema,
+            userDes: null,
         };
     },
     methods: {
-        async login() {
-            // Lấy thông tin đăng nhập
-            const input = { username: this.username, password: this.password };
-
+        async login(input) {
             let result = false;
             // Đăng nhập thành công => {success,  token}
             // Đăng nhập thất bại => false
@@ -69,9 +58,6 @@ export default {
             else
                 confirm("Đăng nhập thất bại rồi cưng!");
         },
-        changeRoleLogin() {
-            this.$router.push({ name: "loginAdmin" });
-        },
         async checkPreLogin() {
             const token = localStorage.getItem("token");
             if (token) {
@@ -110,58 +96,12 @@ export default {
     beforeMount() {
         this.checkPreLogin();
     },
+    created() {
+        this.userDes = userLoginDescription;
+    },
 };
 </script>
 
 <template>
-    <div class="form-container">
-        <h1 class="text-center">Đăng nhập <br>Người dùng</h1>
-        <Form :validation-schema="FormSchema" @submit="login">
-            <div class="form-group mb-3">
-                <label for="username">Tên đăng nhập</label>
-                <Field name="username" type="text" class="form-control" v-model="username"
-                    placeholder="Nhập tên đăng nhập" />
-                <ErrorMessage name="username" class="text-danger" />
-            </div>
-
-            <div class="form-group mb-3">
-                <label for="password">Mật khẩu</label>
-                <Field name="password" type="password" class="form-control" v-model="password"
-                    placeholder="Nhập mật khẩu" />
-                <ErrorMessage name="password" class="text-danger" />
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary w-100">Đăng nhập</button>
-            </div>
-            <div class="form-group">
-                <!-- type = button: không cho phép submit form -->
-                <button class="btn btn-danger w-100 mt-2" type="button" @click="changeRoleLogin">
-                    Đăng nhập với vai trò Quản trị viên
-                </button>
-            </div>
-            <div class="form-group sign-up-option">
-                Chưa có tài khoản?
-                <router-link :to="{ name: 'reader.signup' }">
-                    Đăng ký tại đây!
-                </router-link>
-            </div>
-        </Form>
-    </div>
+    <LogInForm :formDes="userDes" @login:input="login"></LogInForm>
 </template>
-
-<style scoped>
-@import "@/assets/form.css";
-
-.form-container {
-    margin: 100px auto;
-    max-width: 400px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.sign-up-option {
-    text-align: center;
-}
-</style>
