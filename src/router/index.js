@@ -6,8 +6,6 @@ import AdminUI from "@/views/admin/AdminUI.vue";
 import ReaderUI from "@/views/reader/ReaderUI.vue";
 import StaffUI from "@/views/staff/StaffUI.vue";
 import NotFound from "@/views/NotFound.vue";
-import StaffTracking from "@/views/staff/StaffTracking.vue"
-import ReaderBorrowing from "@/views/reader/ReaderBorrowing.vue";
 
 const routes = [
     // Sign up: Dùng chung cho admin, reader, staff
@@ -38,7 +36,7 @@ const routes = [
             {
                 path: "borrowing",
                 name: "borrowingBook",
-                component: ReaderBorrowing,
+                component: () => import("@/components/TransactionTracking.vue"),
             },
             {
                 path: "account",
@@ -64,7 +62,7 @@ const routes = [
             {
                 path: "tracking",
                 name: "trackingBook",
-                component: StaffTracking,
+                component: () => import("@/components/TransactionTracking.vue"),
             },
             {
                 path: "account",

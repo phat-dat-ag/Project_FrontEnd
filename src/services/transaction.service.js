@@ -9,6 +9,10 @@ class TransactionService {
     async getAllTransactionWithFullInformation() {
         return (await this.api.get("/find_all_with/information")).data;
     }
+    // Gọi Get với query (?key=value)
+    async getAllTransactionWithFullInformationById(param) {
+        return (await this.api.get("/find_all/by_id", { params: param })).data;
+    }
     async create(data) {
         return (await this.api.post("/", data)).data;
     }
