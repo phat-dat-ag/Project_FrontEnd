@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-import AdminHome from "@/views/admin/AdminHome.vue";
+import HomePage from "@/components/HomePage.vue";
 import UserLogin from "@/views/login/UserLogin.vue";
 import AdminLogin from "@/views/login/AdminLogin.vue";
 import AdminUI from "@/views/admin/AdminUI.vue";
@@ -31,7 +31,7 @@ const routes = [
             {
                 path: "home",
                 name: "readerHome",
-                component: AdminHome,
+                component: HomePage,
             },
             {
                 path: "borrowing",
@@ -57,7 +57,7 @@ const routes = [
             {
                 path: "home",
                 name: "staffHome",
-                component: AdminHome,
+                component: HomePage,
             },
             {
                 path: "tracking",
@@ -87,7 +87,7 @@ const routes = [
             {
                 path: "",
                 name: "home",
-                component: AdminHome,
+                component: HomePage,
             },
             {
                 path: "reader",
