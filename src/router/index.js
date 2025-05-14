@@ -12,7 +12,7 @@ const routes = [
     {
         path: "/reader/signup",
         name: "reader.signup",
-        component: () => import("@/views/signup/ReaderSignUp.vue"),
+        component: () => import("@/views/signup/SignUp.vue"),
     },
     // User- Login
     {
